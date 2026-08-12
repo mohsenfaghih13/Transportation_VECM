@@ -254,6 +254,34 @@ cat("\nFirst differences created (D_y = y_t - y_{t-1}). Preview:\n")
 print(head(transport_data[, c("Year", "Month", "Total_Inventories", "D_IC",
                              "Airfreight_Scheduled", "D_Airfreight_Scheduled")], 8))
 
+# Plots of first differences: look for mean-reversion (stationary), not white noise.
+# I(0) series fluctuate around a constant mean with no lasting trend.
+# They can still be serially correlated and heteroskedastic; white noise is stronger.
+diff_long <- pivot_longer(
+  transport_data,
+  cols = all_of(names(diff_map)),
+  names_to = "series",
+  values_to = "d_value"
+)
+diff_long$series <- factor(diff_long$series, levels = names(diff_map))
+
+p_diffs <- ggplot(diff_long, aes(x = Date, y = d_value)) +
+  geom_hline(yintercept = 0, linewidth = 0.3, color = "gray50") +
+  geom_line(color = "#1f4e79", linewidth = 0.45, na.rm = TRUE) +
+  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  labs(
+    title = "First Differences of IC and Each Transportation Mode, 2003-2024",
+    subtitle = "Gray line = 0. Stationary (I(0)) series wander around a stable mean with no upward trend. They need not look like white noise.",
+    x = "Year",
+    y = "First difference (D_y = y_t - y_{t-1})"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(strip.text = element_text(face = "bold"))
+
+print(p_diffs)
+ggsave("plots/first_differences.png", p_diffs, width = 11, height = 11, dpi = 150)
+cat("\nPlot saved to plots/first_differences.png\n")
+
 run_adf_diff <- function(x, name) {
   x <- as.numeric(na.omit(x))
   test <- adf.test(x, alternative = "stationary")
