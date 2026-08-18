@@ -1,0 +1,25 @@
+"pair","term","beta_normalized"
+"IC vs TC (WPU30 aggregate)","log_IC.l4",1
+"IC vs TC (WPU30 aggregate)","log_TC.l4",-0.300464558411945
+"IC vs TC (WPU30 aggregate)","trend.l4",-0.00261152869598814
+"IC vs Airfreight_NonScheduled","log_IC.l4",1
+"IC vs Airfreight_NonScheduled","log_Airfreight_NonScheduled.l4",0.21415213574675
+"IC vs Airfreight_NonScheduled","trend.l4",-0.00362959359586912
+"IC vs Airfreight_Scheduled","log_IC.l5",1
+"IC vs Airfreight_Scheduled","log_Airfreight_Scheduled.l5",0.654174002692563
+"IC vs Airfreight_Scheduled","trend.l5",-0.00347740506437619
+"IC vs Trucking_LD_LTL","log_IC.l6",1
+"IC vs Trucking_LD_LTL","log_Trucking_LD_LTL.l6",7.78930802774199
+"IC vs Trucking_LD_LTL","trend.l6",-0.0329132537776114
+"IC vs Trucking_LD_Truckload","log_IC.l5",1
+"IC vs Trucking_LD_Truckload","log_Trucking_LD_Truckload.l5",0.580609675441199
+"IC vs Trucking_LD_Truckload","trend.l5",-0.00516238092714068
+"IC vs Trucking_Local","log_IC.l4",1
+"IC vs Trucking_Local","log_Trucking_Local.l4",-0.838347123432478
+"IC vs Trucking_Local","trend.l4",-0.00117985691864263
+"IC vs Warehouse_Construction","log_IC.l4",1
+"IC vs Warehouse_Construction","log_Warehouse_Construction.l4",-0.404947135070536
+"IC vs Warehouse_Construction","trend.l4",-0.0014794487365364
+"IC vs Warehousing_Storage","log_IC.l5",1
+"IC vs Warehousing_Storage","log_Warehousing_Storage.l5",-0.567897630506367
+"IC vs Warehousing_Storage","trend.l5",-0.00104794368743271

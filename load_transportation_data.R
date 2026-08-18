@@ -1,51 +1,34 @@
-# Load and inspect the transportation inventory dataset
+# Transportation-inventory VECM analysis (logged series)
+# 2009-2024 data: no missing values, ready to analyze
 
-# 1. Install and load the readxl package
-if (!requireNamespace("readxl", quietly = TRUE)) {
-  install.packages("readxl")
+needed <- c("readxl", "ggplot2", "tidyr", "urca", "vars")
+for (pkg in needed) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg, repos = "https://cloud.r-project.org")
+  }
 }
 library(readxl)
-
-# 2. Load the Excel file
-# Note: the file on disk has a space before the extension
-data_file <- "Final_Transportation_Inventory_Dataset .xlsx"
-transport_data <- read_excel(data_file)
-
-# 3. Display the first 10 rows
-print(head(transport_data, 10))
-
-# 4. Show column names
-print(colnames(transport_data))
-
-# 5. Show basic summary statistics
-print(summary(transport_data))
-
-# ---------------------------------------------------------------------------
-# Missing values and time-series plots (TC / IC, 2003-2024)
-# ---------------------------------------------------------------------------
-# IC  = Total_Inventories (Census MTIS inventory levels, $ millions)
-# TC  = 7 transportation service cost indexes, including Warehousing_Storage
-
-if (!requireNamespace("ggplot2", quietly = TRUE)) {
-  install.packages("ggplot2")
-}
-if (!requireNamespace("tidyr", quietly = TRUE)) {
-  install.packages("tidyr")
-}
 library(ggplot2)
 library(tidyr)
+library(urca)
+library(vars)
 
-# 1. Check for NA values in each column
-na_counts <- colSums(is.na(transport_data))
-na_pct <- round(100 * na_counts / nrow(transport_data), 2)
-na_table <- data.frame(
-  column = names(na_counts),
-  n_missing = as.integer(na_counts),
-  pct_missing = as.numeric(na_pct)
-)
-print(na_table)
+# ---------------------------------------------------------------------------
+# Data loading
+# ---------------------------------------------------------------------------
+# 2009-2024 data: no missing values, ready to analyze
+data_file <- "Transportation_Inventory_Complete_with_WPU30.xlsx"
+transport_data <- read_excel(data_file)
 
-# Which years are missing for columns that have NAs
+print(head(transport_data, 10))
+print(colnames(transport_data))
+
+# Summary statistics
+# 2009-2024 data: no missing values, ready to analyze
+print(summary(transport_data))
+
+# IC  = Total_Inventories (Census MTIS, $ millions)
+# TC  = TC_Aggregate_WPU30 (BLS WPU30 transportation services aggregate)
 mode_cols <- c(
   "Airfreight_NonScheduled",
   "Airfreight_Scheduled",
@@ -55,267 +38,425 @@ mode_cols <- c(
   "Warehouse_Construction",
   "Warehousing_Storage"
 )
-for (col in c("Total_Inventories", mode_cols)) {
-  missing_years <- sort(unique(transport_data$Year[is.na(transport_data[[col]])]))
-  if (length(missing_years) > 0) {
-    cat("\n", col, " missing in years: ", paste(missing_years, collapse = ", "), "\n", sep = "")
-  }
-}
 
-# Build a monthly Date from Year and Month (Month is coded M01-M12)
-month_num <- as.integer(sub("M", "", transport_data$Month))
-transport_data$Date <- as.Date(paste(transport_data$Year, month_num, "01", sep = "-"))
-
-# Average TC index across the 7 transportation modes (ignores NAs in a given month)
-tc_cols <- mode_cols
-transport_data$TC <- rowMeans(transport_data[, tc_cols], na.rm = TRUE)
+month_num <- as.integer(transport_data$Month)
+transport_data$Date <- as.Date(
+  sprintf("%d-%02d-01", as.integer(transport_data$Year), month_num)
+)
+transport_data$TC <- transport_data$TC_Aggregate_WPU30
 transport_data$IC <- transport_data$Total_Inventories
 
-# 2. Plots of TC and IC over time (2003-2024)
-# 3. Linear trend overlay to visually inspect upward (non-stationary) drift
-
-if (!dir.exists("plots")) {
-  dir.create("plots")
+# ---------------------------------------------------------------------------
+# Log transformation
+# ---------------------------------------------------------------------------
+# 2009-2024 data: no missing values, ready to analyze
+transport_data$log_TC <- log(transport_data$TC)
+transport_data$log_IC <- log(transport_data$IC)
+for (col in mode_cols) {
+  transport_data[[paste0("log_", col)]] <- log(transport_data[[col]])
 }
+log_mode_cols <- paste0("log_", mode_cols)
+log_map <- c(
+  log_TC = "log_TC",
+  log_IC = "log_IC",
+  setNames(log_mode_cols, log_mode_cols)
+)
 
-# Combined TC vs IC plot (separate panels: TC is an index, IC is $ millions)
-tc_ic_long <- pivot_longer(
+cat("\nLogged series created. Preview:\n")
+print(head(transport_data[, c("Year", "Month", "TC", "log_TC", "IC", "log_IC")], 8))
+
+if (!dir.exists("plots")) dir.create("plots")
+
+# ---------------------------------------------------------------------------
+# Visualizations (logged levels)
+# ---------------------------------------------------------------------------
+# 2009-2024 data: no missing values, ready to analyze
+log_tc_ic <- pivot_longer(
   transport_data,
-  cols = c("TC", "IC"),
+  cols = c("log_TC", "log_IC"),
   names_to = "series",
   values_to = "value"
 )
-tc_ic_long$series <- factor(
-  tc_ic_long$series,
-  levels = c("TC", "IC"),
-  labels = c("TC (avg of 7 transportation modes, index)",
-             "IC (Total_Inventories, $ millions)")
+log_tc_ic$series <- factor(
+  log_tc_ic$series,
+  levels = c("log_TC", "log_IC"),
+  labels = c("log TC (WPU30 transportation services aggregate)",
+             "log IC (Total_Inventories)")
 )
 
-p_tc_ic <- ggplot(tc_ic_long, aes(x = Date, y = value)) +
-  geom_line(color = "#1f4e79", linewidth = 0.7, na.rm = TRUE) +
-  geom_smooth(method = "lm", se = FALSE, color = "#c45911",
-              linetype = "dashed", linewidth = 0.5, na.rm = TRUE) +
+p_log_tc_ic <- ggplot(log_tc_ic, aes(x = Date, y = value)) +
+  geom_line(color = "#1f4e79", linewidth = 0.7) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "#c45911",
+              linetype = "dashed", linewidth = 0.5) +
   facet_wrap(~ series, scales = "free_y", ncol = 1) +
   labs(
-    title = "Transportation Cost (TC) and Inventory Cost (IC), 2003-2024",
-    subtitle = "Dashed lines are linear trends; an upward slope suggests non-stationarity in levels",
+    title = "Logged TC and IC, 2009-2024",
+    subtitle = "Natural logs. Dashed line = linear trend.",
     x = "Year",
-    y = NULL
+    y = "log(value)"
   ) +
   theme_minimal(base_size = 12) +
   theme(strip.text = element_text(face = "bold"))
 
-print(p_tc_ic)
-ggsave("plots/tc_ic_over_time.png", p_tc_ic, width = 10, height = 5.5, dpi = 150)
+print(p_log_tc_ic)
+ggsave("plots/log_tc_ic_over_time.png", p_log_tc_ic, width = 10, height = 5.5, dpi = 150)
 
-# IC + each of the 7 transportation modes in separate panels
-plot_cols <- c("Total_Inventories", mode_cols)
-plot_long <- pivot_longer(
+log_plot_cols <- c("log_IC", "log_TC", log_mode_cols)
+log_long <- pivot_longer(
   transport_data,
-  cols = all_of(plot_cols),
+  cols = all_of(log_plot_cols),
   names_to = "series",
   values_to = "value"
 )
-plot_long$series <- factor(
-  plot_long$series,
-  levels = plot_cols,
-  labels = c("IC (Total_Inventories)", mode_cols)
-)
+log_long$series <- factor(log_long$series, levels = log_plot_cols)
 
-p_modes <- ggplot(plot_long, aes(x = Date, y = value)) +
-  geom_line(color = "#1f4e79", linewidth = 0.6, na.rm = TRUE) +
-  geom_smooth(method = "lm", se = FALSE, color = "#c45911",
-              linetype = "dashed", linewidth = 0.5, na.rm = TRUE) +
+p_log_modes <- ggplot(log_long, aes(x = Date, y = value)) +
+  geom_line(color = "#1f4e79", linewidth = 0.6) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "#c45911",
+              linetype = "dashed", linewidth = 0.5) +
   facet_wrap(~ series, scales = "free_y", ncol = 2) +
   labs(
-    title = "IC (Total_Inventories) and Each Transportation Mode, 2003-2024",
-    subtitle = "Red dashed line = linear trend. Gaps are missing values. Upward trends suggest non-stationary levels.",
+    title = "Logged IC, Logged TC Aggregate, and Logged Modes, 2009-2024",
+    subtitle = "Natural logs. Red dashed line = linear trend. ADF uses constant + trend.",
     x = "Year",
-    y = "Value (IC in $ millions; modes are indexes)"
+    y = "log(value)"
   ) +
   theme_minimal(base_size = 11) +
   theme(strip.text = element_text(face = "bold"))
 
-print(p_modes)
-ggsave("plots/ic_and_modes_over_time.png", p_modes, width = 11, height = 11, dpi = 150)
-
-cat("\nPlots saved to plots/tc_ic_over_time.png and plots/ic_and_modes_over_time.png\n")
+print(p_log_modes)
+ggsave("plots/log_ic_tc_modes.png", p_log_modes, width = 11, height = 12, dpi = 150)
+cat("\nLog-level plots saved.\n")
 
 # ---------------------------------------------------------------------------
-# Augmented Dickey-Fuller (ADF) tests for stationarity in levels
+# ADF tests (ur.df on logged data)
 # ---------------------------------------------------------------------------
-# H0: series has a unit root (non-stationary)
-# H1: series is stationary
-# tseries::adf.test uses a constant and a linear trend (appropriate given
-# the upward plots). Decision rule: p < 0.05 reject H0 (stationary);
-# p > 0.05 fail to reject H0 (non-stationary).
+# 2009-2024 data: no missing values, ready to analyze
+# Log levels: type = "trend" (constant + linear trend)
+# Log differences: type = "drift" (constant only)
+# Lags: AIC, maximum 12. Reject H0 at 5% if tau < 5% critical value.
 
-if (!requireNamespace("tseries", quietly = TRUE)) {
-  install.packages("tseries")
-}
-library(tseries)
+run_urdf <- function(x, name, type = c("trend", "drift")) {
+  type <- match.arg(type)
+  x <- as.numeric(x)
+  fit <- ur.df(x, type = type, lags = 12, selectlags = "AIC")
+  tau_name <- if (type == "trend") "tau3" else "tau2"
+  spec_label <- if (type == "trend") {
+    "trend (constant + linear trend)"
+  } else {
+    "drift (constant only)"
+  }
+  teststat <- as.numeric(fit@teststat[1, tau_name])
+  cv <- as.numeric(fit@cval[tau_name, ])
+  names(cv) <- colnames(fit@cval)
+  n_det <- if (type == "trend") 3L else 2L
+  lags_sel <- NROW(coef(fit@testreg)) - n_det
+  conclusion <- ifelse(teststat < cv["5pct"], "Stationary", "Non-stationary")
 
-# Critical values from the Banerjee et al. (1993) tables used by tseries
-# (ADF with constant + trend). Interpolated to the sample size of each series.
-adf_critical_values <- function(n) {
-  tableT <- c(25, 50, 100, 250, 500, 1e5)
-  # rows: 1%, 5%, 10%
-  cv_table <- rbind(
-    c(-4.38, -4.15, -4.04, -3.99, -3.98, -3.96),
-    c(-3.60, -3.50, -3.45, -3.43, -3.42, -3.41),
-    c(-3.24, -3.18, -3.15, -3.13, -3.13, -3.12)
-  )
-  c(
-    crit_1pct = unname(approx(tableT, cv_table[1, ], xout = n, rule = 2)$y),
-    crit_5pct = unname(approx(tableT, cv_table[2, ], xout = n, rule = 2)$y),
-    crit_10pct = unname(approx(tableT, cv_table[3, ], xout = n, rule = 2)$y)
-  )
-}
-
-run_adf <- function(x, name) {
-  x <- as.numeric(na.omit(x))
-  test <- adf.test(x, alternative = "stationary")
-  cv <- adf_critical_values(length(x))
-  cat("\n========== ADF test:", name, "==========\n")
-  print(test)
-  cat("Critical values (constant + trend): 1% = ",
-      round(cv["crit_1pct"], 2), ", 5% = ", round(cv["crit_5pct"], 2),
-      ", 10% = ", round(cv["crit_10pct"], 2), "\n", sep = "")
-  cat("Interpretation: p-value = ", format.pval(test$p.value, digits = 4),
-      ifelse(test$p.value < 0.05,
-             " < 0.05 → stationary (reject unit root)\n",
-             " > 0.05 → non-stationary (fail to reject unit root)\n"),
+  cat("\n========== ADF (ur.df):", name, "==========\n")
+  cat("Specification:", spec_label, "\n")
+  print(summary(fit))
+  cat("tau statistic = ", round(teststat, 4),
+      " | 1% CV = ", round(cv["1pct"], 2),
+      " | 5% CV = ", round(cv["5pct"], 2),
+      " | 10% CV = ", round(cv["10pct"], 2), "\n", sep = "")
+  cat("Interpretation: ",
+      ifelse(teststat < cv["5pct"],
+             "tau < 5% CV → reject unit root (stationary)\n",
+             "tau > 5% CV → fail to reject unit root (non-stationary)\n"),
       sep = "")
+
   data.frame(
     series = name,
+    specification = spec_label,
     n = length(x),
-    lags = unname(test$parameter),
-    adf_statistic = unname(test$statistic),
-    p_value = test$p.value,
-    crit_1pct = unname(cv["crit_1pct"]),
-    crit_5pct = unname(cv["crit_5pct"]),
-    crit_10pct = unname(cv["crit_10pct"]),
-    conclusion = ifelse(test$p.value < 0.05, "Stationary", "Non-stationary"),
-    stringsAsFactors = FALSE
+    lags_aic = lags_sel,
+    tau_stat = teststat,
+    crit_1pct = unname(cv["1pct"]),
+    crit_5pct = unname(cv["5pct"]),
+    crit_10pct = unname(cv["10pct"]),
+    conclusion = conclusion
   )
 }
 
-# IC first, then each of the 7 transportation modes (incl. Warehousing_Storage)
-adf_series <- c(
-  "IC (Total_Inventories)" = "Total_Inventories",
-  Airfreight_NonScheduled = "Airfreight_NonScheduled",
-  Airfreight_Scheduled = "Airfreight_Scheduled",
-  Trucking_LD_LTL = "Trucking_LD_LTL",
-  Trucking_LD_Truckload = "Trucking_LD_Truckload",
-  Trucking_Local = "Trucking_Local",
-  Warehouse_Construction = "Warehouse_Construction",
-  Warehousing_Storage = "Warehousing_Storage"
-)
-
-adf_results <- do.call(rbind, lapply(names(adf_series), function(lbl) {
-  col <- adf_series[[lbl]]
-  run_adf(transport_data[[col]], lbl)
+adf_log_levels <- do.call(rbind, lapply(names(log_map), function(lbl) {
+  run_urdf(transport_data[[log_map[[lbl]]]], lbl, type = "trend")
 }))
-rownames(adf_results) <- NULL
+rownames(adf_log_levels) <- NULL
 
-cat("\n========== ADF summary (levels, 2003-2024) ==========\n")
-print(adf_results, row.names = FALSE, digits = 4)
+cat("\n========== ADF summary (LOG levels, type = trend) ==========\n")
+print(adf_log_levels, row.names = FALSE, digits = 4)
+n_nonstat <- sum(adf_log_levels$conclusion == "Non-stationary")
+cat("\n", n_nonstat, " of ", nrow(adf_log_levels),
+    " logged series are non-stationary at the 5% level.\n", sep = "")
 
-n_nonstat <- sum(adf_results$conclusion == "Non-stationary")
-cat("\n", n_nonstat, " of ", nrow(adf_results),
-    " series are non-stationary at the 5% level (p > 0.05).\n", sep = "")
-cat("A unit root in levels is the usual justification for differencing and VECM.\n")
-
-# ---------------------------------------------------------------------------
-# First differences and ADF tests on D_IC, D_modes
-# ---------------------------------------------------------------------------
-# D_y_t = y_t - y_{t-1}
-# If levels are I(1) and first differences are I(0), the series are
-# integrated of order 1 — the VECM setting.
-
-diff_map <- c(
-  D_IC = "Total_Inventories",
-  D_Airfreight_NonScheduled = "Airfreight_NonScheduled",
-  D_Airfreight_Scheduled = "Airfreight_Scheduled",
-  D_Trucking_LD_LTL = "Trucking_LD_LTL",
-  D_Trucking_LD_Truckload = "Trucking_LD_Truckload",
-  D_Trucking_Local = "Trucking_Local",
-  D_Warehouse_Construction = "Warehouse_Construction",
-  D_Warehousing_Storage = "Warehousing_Storage"
+# First differences of logs: D_log_y = log(y_t) - log(y_{t-1})
+diff_log_map <- c(
+  D_log_TC = "log_TC",
+  D_log_IC = "log_IC",
+  D_log_Airfreight_NonScheduled = "log_Airfreight_NonScheduled",
+  D_log_Airfreight_Scheduled = "log_Airfreight_Scheduled",
+  D_log_Trucking_LD_LTL = "log_Trucking_LD_LTL",
+  D_log_Trucking_LD_Truckload = "log_Trucking_LD_Truckload",
+  D_log_Trucking_Local = "log_Trucking_Local",
+  D_log_Warehouse_Construction = "log_Warehouse_Construction",
+  D_log_Warehousing_Storage = "log_Warehousing_Storage"
 )
 
-for (dcol in names(diff_map)) {
-  level_col <- diff_map[[dcol]]
-  transport_data[[dcol]] <- c(NA, diff(transport_data[[level_col]]))
+dlog_data <- data.frame(Date = transport_data$Date[-1])
+for (dcol in names(diff_log_map)) {
+  dlog_data[[dcol]] <- diff(transport_data[[diff_log_map[[dcol]]]])
 }
 
-cat("\nFirst differences created (D_y = y_t - y_{t-1}). Preview:\n")
-print(head(transport_data[, c("Year", "Month", "Total_Inventories", "D_IC",
-                             "Airfreight_Scheduled", "D_Airfreight_Scheduled")], 8))
+cat("\nFirst differences of logs created. Preview:\n")
+print(head(dlog_data[, c("Date", "D_log_IC", "D_log_TC")], 8))
 
-# Plots of first differences: look for mean-reversion (stationary), not white noise.
-# I(0) series fluctuate around a constant mean with no lasting trend.
-# They can still be serially correlated and heteroskedastic; white noise is stronger.
-diff_long <- pivot_longer(
-  transport_data,
-  cols = all_of(names(diff_map)),
+dlog_long <- pivot_longer(
+  dlog_data,
+  cols = all_of(names(diff_log_map)),
   names_to = "series",
   values_to = "d_value"
 )
-diff_long$series <- factor(diff_long$series, levels = names(diff_map))
+dlog_long$series <- factor(dlog_long$series, levels = names(diff_log_map))
 
-p_diffs <- ggplot(diff_long, aes(x = Date, y = d_value)) +
+p_dlog <- ggplot(dlog_long, aes(x = Date, y = d_value)) +
   geom_hline(yintercept = 0, linewidth = 0.3, color = "gray50") +
-  geom_line(color = "#1f4e79", linewidth = 0.45, na.rm = TRUE) +
+  geom_line(color = "#1f4e79", linewidth = 0.45) +
   facet_wrap(~ series, scales = "free_y", ncol = 2) +
   labs(
-    title = "First Differences of IC and Each Transportation Mode, 2003-2024",
-    subtitle = "Gray line = 0. Stationary (I(0)) series wander around a stable mean with no upward trend. They need not look like white noise.",
+    title = "First Differences of Logged Series, 2009-2024",
+    subtitle = "D_log_y = log(y_t) - log(y_{t-1}). Gray line = 0. ADF uses constant only (drift).",
     x = "Year",
-    y = "First difference (D_y = y_t - y_{t-1})"
+    y = "First difference of log"
   ) +
   theme_minimal(base_size = 11) +
   theme(strip.text = element_text(face = "bold"))
 
-print(p_diffs)
-ggsave("plots/first_differences.png", p_diffs, width = 11, height = 11, dpi = 150)
-cat("\nPlot saved to plots/first_differences.png\n")
+print(p_dlog)
+ggsave("plots/dlog_first_differences.png", p_dlog, width = 11, height = 12, dpi = 150)
+cat("\nPlot saved to plots/dlog_first_differences.png\n")
 
-run_adf_diff <- function(x, name) {
-  x <- as.numeric(na.omit(x))
-  test <- adf.test(x, alternative = "stationary")
-  cat("\n========== ADF test on first difference:", name, "==========\n")
-  print(test)
-  cat("Interpretation: p-value = ", format.pval(test$p.value, digits = 4),
-      ifelse(test$p.value < 0.05,
-             " < 0.05 → first difference is stationary I(0)\n",
-             " > 0.05 → first difference is still non-stationary\n"),
-      sep = "")
-  data.frame(
-    series = name,
-    n = length(x),
-    lags = unname(test$parameter),
-    adf_statistic = unname(test$statistic),
-    p_value = test$p.value,
-    conclusion = ifelse(test$p.value < 0.05,
-                        "I(0) stationary",
-                        "Not I(0)"),
-    stringsAsFactors = FALSE
+adf_log_diffs <- do.call(rbind, lapply(names(diff_log_map), function(dcol) {
+  run_urdf(dlog_data[[dcol]], dcol, type = "drift")
+}))
+rownames(adf_log_diffs) <- NULL
+
+cat("\n========== ADF summary (first differences of LOGS, type = drift) ==========\n")
+print(adf_log_diffs, row.names = FALSE, digits = 4)
+n_i0 <- sum(adf_log_diffs$conclusion == "Stationary")
+cat("\n", n_i0, " of ", nrow(adf_log_diffs),
+    " first-differenced log series are stationary at the 5% level.\n", sep = "")
+if (n_i0 == nrow(adf_log_diffs) && n_nonstat == nrow(adf_log_levels)) {
+  cat("Log levels are I(1) and log differences are I(0) → series are integrated of order 1 in logs.\n")
+}
+
+# ---------------------------------------------------------------------------
+# Seasonal dummies
+# ---------------------------------------------------------------------------
+# 2009-2024 data: no missing values, ready to analyze
+# ca.jo(season = 12) uses centered monthly dummies (11 independent columns).
+transport_data$month_f <- factor(month_num, levels = 1:12)
+season_mm <- model.matrix(~ month_f, data = transport_data)
+cat("\n========== Seasonal dummies (month 1-12) ==========\n")
+print(head(data.frame(Date = transport_data$Date, month = month_num, season_mm), 5))
+
+# ---------------------------------------------------------------------------
+# Johansen tests (ca.jo)
+# ---------------------------------------------------------------------------
+# 2009-2024 data: no missing values, ready to analyze
+# ecdet = "trend": constant + trend in the cointegrating relation
+# season = 12; K = AIC lag of VAR in levels (min 2, max 12)
+# H0: r = 0 vs r >= 1; H0: r <= 1 vs r = 2
+
+select_var_k <- function(dat) {
+  vs <- VARselect(dat, lag.max = 12, type = "both", season = 12)
+  cat("VAR lag selection (AIC/HQ/SC/FPE):", paste(vs$selection, collapse = ", "), "\n")
+  k <- as.integer(unname(vs$selection["AIC(n)"]))
+  if (is.na(k) || k < 2) 2L else k
+}
+
+rank_conclusion <- function(stat_r0, cv5_r0, stat_r1, cv5_r1) {
+  rej0 <- stat_r0 > cv5_r0
+  rej1 <- stat_r1 > cv5_r1
+  if (!rej0) {
+    "r = 0 (not cointegrated)"
+  } else if (!rej1) {
+    "r = 1 (cointegrated)"
+  } else {
+    "r = 2 (full rank)"
+  }
+}
+
+pick_row <- function(rn, pattern) {
+  i <- grep(pattern, rn, perl = TRUE)
+  if (length(i) != 1) stop("Could not identify row: ", pattern)
+  i
+}
+
+run_johansen_pair <- function(pair_label, y_ic, y_other, other_name, dates) {
+  dat <- cbind(log_IC = as.numeric(y_ic), other = as.numeric(y_other))
+  colnames(dat) <- c("log_IC", other_name)
+  storage.mode(dat) <- "double"
+  k <- select_var_k(dat)
+
+  jo_tr <- ca.jo(dat, type = "trace", ecdet = "trend", K = k,
+                 spec = "longrun", season = 12)
+  jo_ei <- ca.jo(dat, type = "eigen", ecdet = "trend", K = k,
+                 spec = "longrun", season = 12)
+
+  cat("\n========== Johansen:", pair_label, "==========\n")
+  cat("Deterministic: ecdet = 'trend'; season = 12; K(AIC) =", k, "\n")
+  cat("\n--- Trace ---\n")
+  print(summary(jo_tr))
+  cat("\n--- Maximum eigenvalue ---\n")
+  print(summary(jo_ei))
+
+  rn_tr <- rownames(jo_tr@cval)
+  rn_ei <- rownames(jo_ei@cval)
+  i_tr0 <- pick_row(rn_tr, "r = 0")
+  i_tr1 <- pick_row(rn_tr, "r <= 1")
+  i_ei0 <- pick_row(rn_ei, "r = 0")
+  i_ei1 <- pick_row(rn_ei, "r <= 1")
+
+  tr_stat <- as.numeric(jo_tr@teststat)
+  ei_stat <- as.numeric(jo_ei@teststat)
+  tr_cv <- jo_tr@cval
+  ei_cv <- jo_ei@cval
+
+  trace_rank <- rank_conclusion(
+    tr_stat[i_tr0], tr_cv[i_tr0, "5pct"],
+    tr_stat[i_tr1], tr_cv[i_tr1, "5pct"]
+  )
+  eigen_rank <- rank_conclusion(
+    ei_stat[i_ei0], ei_cv[i_ei0, "5pct"],
+    ei_stat[i_ei1], ei_cv[i_ei1, "5pct"]
+  )
+
+  cat("Trace rank conclusion (5%):        ", trace_rank, "\n")
+  cat("Max-eigenvalue rank conclusion (5%): ", eigen_rank, "\n")
+
+  vec <- jo_tr@V[, 1]
+  names(vec) <- rownames(jo_tr@V)
+  ic_term <- grep("^log_IC", names(vec), value = TRUE)[1]
+  other_term <- grep(paste0("^", other_name), names(vec), value = TRUE)[1]
+  trend_term <- grep("trend", names(vec), value = TRUE)[1]
+  vec_norm <- vec / vec[[ic_term]]
+  cat("Cointegrating vector (raw, col 1):\n")
+  print(round(vec, 4))
+  cat("Normalized on log_IC = 1:\n")
+  print(round(vec_norm, 4))
+
+  ect <- as.numeric(jo_tr@ZK %*% jo_tr@V[, 1, drop = FALSE])
+  ect_dates <- tail(dates, length(ect))
+
+  list(
+    table = data.frame(
+      pair = pair_label,
+      K_aic = k,
+      trace_r0 = tr_stat[i_tr0],
+      trace_r1 = tr_stat[i_tr1],
+      trace_cv5_r0 = unname(tr_cv[i_tr0, "5pct"]),
+      trace_cv5_r1 = unname(tr_cv[i_tr1, "5pct"]),
+      trace_cv1_r0 = unname(tr_cv[i_tr0, "1pct"]),
+      trace_cv10_r0 = unname(tr_cv[i_tr0, "10pct"]),
+      eigen_r0 = ei_stat[i_ei0],
+      eigen_r1 = ei_stat[i_ei1],
+      eigen_cv5_r0 = unname(ei_cv[i_ei0, "5pct"]),
+      eigen_cv5_r1 = unname(ei_cv[i_ei1, "5pct"]),
+      eigen_cv1_r0 = unname(ei_cv[i_ei0, "1pct"]),
+      eigen_cv10_r0 = unname(ei_cv[i_ei0, "10pct"]),
+      rank_trace = trace_rank,
+      rank_maxeigen = eigen_rank,
+      coint_at_5pct = grepl("r = 1", trace_rank) || grepl("r = 2", trace_rank),
+      beta_log_IC = unname(vec_norm[[ic_term]]),
+      beta_other = unname(vec_norm[[other_term]]),
+      beta_trend = if (length(trend_term)) unname(vec_norm[[trend_term]]) else NA_real_
+    ),
+    lambda = data.frame(
+      pair = pair_label,
+      component = paste0("lambda", seq_along(jo_tr@lambda)),
+      eigenvalue = as.numeric(jo_tr@lambda)
+    ),
+    ect = data.frame(pair = pair_label, Date = ect_dates, ect = ect),
+    vector = data.frame(
+      pair = pair_label,
+      term = names(vec_norm),
+      beta_normalized = as.numeric(vec_norm)
+    )
   )
 }
 
-adf_diff_results <- do.call(rbind, lapply(names(diff_map), function(dcol) {
-  run_adf_diff(transport_data[[dcol]], dcol)
-}))
-rownames(adf_diff_results) <- NULL
+johansen_pairs <- list(
+  list(label = "IC vs TC (WPU30 aggregate)", other = "log_TC", pretty = "log_TC"),
+  list(label = "IC vs Airfreight_NonScheduled", other = "log_Airfreight_NonScheduled", pretty = "log_Airfreight_NonScheduled"),
+  list(label = "IC vs Airfreight_Scheduled", other = "log_Airfreight_Scheduled", pretty = "log_Airfreight_Scheduled"),
+  list(label = "IC vs Trucking_LD_LTL", other = "log_Trucking_LD_LTL", pretty = "log_Trucking_LD_LTL"),
+  list(label = "IC vs Trucking_LD_Truckload", other = "log_Trucking_LD_Truckload", pretty = "log_Trucking_LD_Truckload"),
+  list(label = "IC vs Trucking_Local", other = "log_Trucking_Local", pretty = "log_Trucking_Local"),
+  list(label = "IC vs Warehouse_Construction", other = "log_Warehouse_Construction", pretty = "log_Warehouse_Construction"),
+  list(label = "IC vs Warehousing_Storage", other = "log_Warehousing_Storage", pretty = "log_Warehousing_Storage")
+)
 
-cat("\n========== ADF summary (first differences) ==========\n")
-print(adf_diff_results, row.names = FALSE, digits = 4)
+johansen_out <- lapply(johansen_pairs, function(p) {
+  run_johansen_pair(
+    pair_label = p$label,
+    y_ic = transport_data$log_IC,
+    y_other = transport_data[[p$other]],
+    other_name = p$pretty,
+    dates = transport_data$Date
+  )
+})
 
-n_i0 <- sum(adf_diff_results$conclusion == "I(0) stationary")
-cat("\n", n_i0, " of ", nrow(adf_diff_results),
-    " first-differenced series are stationary at the 5% level.\n", sep = "")
-if (n_i0 == nrow(adf_diff_results) && n_nonstat == nrow(adf_results)) {
-  cat("Levels are I(1) and differences are I(0) → all series are integrated of order 1.\n")
-}
+johansen_table <- do.call(rbind, lapply(johansen_out, `[[`, "table"))
+johansen_lambda <- do.call(rbind, lapply(johansen_out, `[[`, "lambda"))
+johansen_ect <- do.call(rbind, lapply(johansen_out, `[[`, "ect"))
+johansen_vec <- do.call(rbind, lapply(johansen_out, `[[`, "vector"))
+rownames(johansen_table) <- NULL
+
+cat("\n========== Johansen summary table (5% rank tests) ==========\n")
+print(johansen_table[, c("pair", "K_aic",
+                         "trace_r0", "trace_cv5_r0", "trace_r1", "trace_cv5_r1",
+                         "eigen_r0", "eigen_cv5_r0", "eigen_r1", "eigen_cv5_r1",
+                         "rank_trace", "rank_maxeigen")],
+      row.names = FALSE, digits = 4)
+
+cat("\nCointegrated pairs (trace test, 5%): r >= 1\n")
+print(johansen_table$pair[johansen_table$coint_at_5pct])
+
+cat("\nNormalized cointegrating vectors (log_IC = 1):\n")
+print(johansen_vec, row.names = FALSE, digits = 4)
+
+write.csv(johansen_table, "plots/johansen_summary.csv", row.names = FALSE)
+write.csv(johansen_vec, "plots/johansen_vectors.csv", row.names = FALSE)
+
+p_eigs <- ggplot(johansen_lambda, aes(x = component, y = eigenvalue)) +
+  geom_col(fill = "#1f4e79", width = 0.7) +
+  facet_wrap(~ pair, ncol = 2) +
+  labs(
+    title = "Johansen Eigenvalues by Pair (logged series)",
+    subtitle = "ecdet = trend, season = 12. Larger lambda_1 supports a cointegrating relation.",
+    x = "Eigenvalue",
+    y = "lambda"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(strip.text = element_text(face = "bold", size = 8))
+
+print(p_eigs)
+ggsave("plots/johansen_eigenvalues.png", p_eigs, width = 11, height = 12, dpi = 150)
+
+p_ect <- ggplot(johansen_ect, aes(x = Date, y = ect)) +
+  geom_hline(yintercept = 0, linewidth = 0.3, color = "gray50") +
+  geom_line(color = "#1f4e79", linewidth = 0.45) +
+  facet_wrap(~ pair, scales = "free_y", ncol = 2) +
+  labs(
+    title = "Cointegrating Relations (first eigenvector), 2009-2024",
+    subtitle = "beta' Y_t from ca.jo (ecdet = trend). Mean-reverting path is consistent with r >= 1.",
+    x = "Year",
+    y = "Cointegrating combination"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(strip.text = element_text(face = "bold", size = 8))
+
+print(p_ect)
+ggsave("plots/johansen_coint_relations.png", p_ect, width = 11, height = 12, dpi = 150)
+cat("\nJohansen plots saved to plots/johansen_eigenvalues.png and plots/johansen_coint_relations.png\n")
