@@ -4,11 +4,11 @@ Monthly U.S. transportation cost indexes and inventory levels (2009–2024) for 
 
 ## Data
 
-`Transportation_Inventory_Complete_with_WPU30.xlsx` (Jun 2009–Dec 2024, 187 months, no missing values)
+`Transportation_Inventory_Complete_10_Modes_WPU30.xlsx` (Jun 2009–Dec 2024, 187 months, no missing values)
 
 - **IC** = `Total_Inventories` (Census MTIS, $ millions)
 - **TC** = `TC_Aggregate_WPU30` (BLS WPU30 transportation services aggregate)
-- **Modes** = seven BLS transportation service cost indexes, including `Warehousing_Storage`
+- **Modes** = ten BLS transportation service cost indexes, including `Rail_Transportation`, `Inland_Water_Freight`, `Deep_Sea_Freight`, and `Warehousing_Storage`
 
 ## Analysis
 
@@ -21,4 +21,4 @@ Monthly U.S. transportation cost indexes and inventory levels (2009–2024) for 
 Rscript load_transportation_data.R
 ```
 
-Plots and Johansen tables are written to `plots/`.
+Each run clears `plots/` and writes only the current figures and Johansen tables.

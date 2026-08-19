@@ -17,7 +17,7 @@ library(vars)
 # Data loading
 # ---------------------------------------------------------------------------
 # 2009-2024 data: no missing values, ready to analyze
-data_file <- "Transportation_Inventory_Complete_with_WPU30.xlsx"
+data_file <- "Transportation_Inventory_Complete_10_Modes_WPU30.xlsx"
 transport_data <- read_excel(data_file)
 
 print(head(transport_data, 10))
@@ -29,12 +29,16 @@ print(summary(transport_data))
 
 # IC  = Total_Inventories (Census MTIS, $ millions)
 # TC  = TC_Aggregate_WPU30 (BLS WPU30 transportation services aggregate)
+# 10 modes: original seven plus Rail, Inland Water, and Deep Sea freight
 mode_cols <- c(
   "Airfreight_NonScheduled",
   "Airfreight_Scheduled",
   "Trucking_LD_LTL",
   "Trucking_LD_Truckload",
   "Trucking_Local",
+  "Rail_Transportation",
+  "Inland_Water_Freight",
+  "Deep_Sea_Freight",
   "Warehouse_Construction",
   "Warehousing_Storage"
 )
@@ -65,7 +69,11 @@ log_map <- c(
 cat("\nLogged series created. Preview:\n")
 print(head(transport_data[, c("Year", "Month", "TC", "log_TC", "IC", "log_IC")], 8))
 
-if (!dir.exists("plots")) dir.create("plots")
+if (dir.exists("plots")) {
+  unlink(list.files("plots", full.names = TRUE))
+} else {
+  dir.create("plots")
+}
 
 # ---------------------------------------------------------------------------
 # Visualizations (logged levels)
@@ -114,7 +122,7 @@ p_log_modes <- ggplot(log_long, aes(x = Date, y = value)) +
   geom_line(color = "#1f4e79", linewidth = 0.6) +
   geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "#c45911",
               linetype = "dashed", linewidth = 0.5) +
-  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  facet_wrap(~ series, scales = "free_y", ncol = 3) +
   labs(
     title = "Logged IC, Logged TC Aggregate, and Logged Modes, 2009-2024",
     subtitle = "Natural logs. Red dashed line = linear trend. ADF uses constant + trend.",
@@ -125,7 +133,7 @@ p_log_modes <- ggplot(log_long, aes(x = Date, y = value)) +
   theme(strip.text = element_text(face = "bold"))
 
 print(p_log_modes)
-ggsave("plots/log_ic_tc_modes.png", p_log_modes, width = 11, height = 12, dpi = 150)
+ggsave("plots/log_ic_tc_modes.png", p_log_modes, width = 12, height = 14, dpi = 150)
 cat("\nLog-level plots saved.\n")
 
 # ---------------------------------------------------------------------------
@@ -194,13 +202,7 @@ cat("\n", n_nonstat, " of ", nrow(adf_log_levels),
 diff_log_map <- c(
   D_log_TC = "log_TC",
   D_log_IC = "log_IC",
-  D_log_Airfreight_NonScheduled = "log_Airfreight_NonScheduled",
-  D_log_Airfreight_Scheduled = "log_Airfreight_Scheduled",
-  D_log_Trucking_LD_LTL = "log_Trucking_LD_LTL",
-  D_log_Trucking_LD_Truckload = "log_Trucking_LD_Truckload",
-  D_log_Trucking_Local = "log_Trucking_Local",
-  D_log_Warehouse_Construction = "log_Warehouse_Construction",
-  D_log_Warehousing_Storage = "log_Warehousing_Storage"
+  setNames(log_mode_cols, paste0("D_", log_mode_cols))
 )
 
 dlog_data <- data.frame(Date = transport_data$Date[-1])
@@ -222,7 +224,7 @@ dlog_long$series <- factor(dlog_long$series, levels = names(diff_log_map))
 p_dlog <- ggplot(dlog_long, aes(x = Date, y = d_value)) +
   geom_hline(yintercept = 0, linewidth = 0.3, color = "gray50") +
   geom_line(color = "#1f4e79", linewidth = 0.45) +
-  facet_wrap(~ series, scales = "free_y", ncol = 2) +
+  facet_wrap(~ series, scales = "free_y", ncol = 3) +
   labs(
     title = "First Differences of Logged Series, 2009-2024",
     subtitle = "D_log_y = log(y_t) - log(y_{t-1}). Gray line = 0. ADF uses constant only (drift).",
@@ -233,7 +235,7 @@ p_dlog <- ggplot(dlog_long, aes(x = Date, y = d_value)) +
   theme(strip.text = element_text(face = "bold"))
 
 print(p_dlog)
-ggsave("plots/dlog_first_differences.png", p_dlog, width = 11, height = 12, dpi = 150)
+ggsave("plots/dlog_first_differences.png", p_dlog, width = 12, height = 14, dpi = 150)
 cat("\nPlot saved to plots/dlog_first_differences.png\n")
 
 adf_log_diffs <- do.call(rbind, lapply(names(diff_log_map), function(dcol) {
@@ -386,15 +388,19 @@ run_johansen_pair <- function(pair_label, y_ic, y_other, other_name, dates) {
   )
 }
 
-johansen_pairs <- list(
-  list(label = "IC vs TC (WPU30 aggregate)", other = "log_TC", pretty = "log_TC"),
-  list(label = "IC vs Airfreight_NonScheduled", other = "log_Airfreight_NonScheduled", pretty = "log_Airfreight_NonScheduled"),
-  list(label = "IC vs Airfreight_Scheduled", other = "log_Airfreight_Scheduled", pretty = "log_Airfreight_Scheduled"),
-  list(label = "IC vs Trucking_LD_LTL", other = "log_Trucking_LD_LTL", pretty = "log_Trucking_LD_LTL"),
-  list(label = "IC vs Trucking_LD_Truckload", other = "log_Trucking_LD_Truckload", pretty = "log_Trucking_LD_Truckload"),
-  list(label = "IC vs Trucking_Local", other = "log_Trucking_Local", pretty = "log_Trucking_Local"),
-  list(label = "IC vs Warehouse_Construction", other = "log_Warehouse_Construction", pretty = "log_Warehouse_Construction"),
-  list(label = "IC vs Warehousing_Storage", other = "log_Warehousing_Storage", pretty = "log_Warehousing_Storage")
+johansen_pairs <- c(
+  list(list(
+    label = "IC vs TC (WPU30 aggregate)",
+    other = "log_TC",
+    pretty = "log_TC"
+  )),
+  lapply(mode_cols, function(m) {
+    list(
+      label = paste("IC vs", m),
+      other = paste0("log_", m),
+      pretty = paste0("log_", m)
+    )
+  })
 )
 
 johansen_out <- lapply(johansen_pairs, function(p) {
@@ -442,7 +448,7 @@ p_eigs <- ggplot(johansen_lambda, aes(x = component, y = eigenvalue)) +
   theme(strip.text = element_text(face = "bold", size = 8))
 
 print(p_eigs)
-ggsave("plots/johansen_eigenvalues.png", p_eigs, width = 11, height = 12, dpi = 150)
+ggsave("plots/johansen_eigenvalues.png", p_eigs, width = 11, height = 16, dpi = 150)
 
 p_ect <- ggplot(johansen_ect, aes(x = Date, y = ect)) +
   geom_hline(yintercept = 0, linewidth = 0.3, color = "gray50") +
@@ -458,5 +464,5 @@ p_ect <- ggplot(johansen_ect, aes(x = Date, y = ect)) +
   theme(strip.text = element_text(face = "bold", size = 8))
 
 print(p_ect)
-ggsave("plots/johansen_coint_relations.png", p_ect, width = 11, height = 12, dpi = 150)
+ggsave("plots/johansen_coint_relations.png", p_ect, width = 11, height = 16, dpi = 150)
 cat("\nJohansen plots saved to plots/johansen_eigenvalues.png and plots/johansen_coint_relations.png\n")

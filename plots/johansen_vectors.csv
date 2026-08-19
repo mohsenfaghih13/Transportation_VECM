@@ -17,6 +17,15 @@
 "IC vs Trucking_Local","log_IC.l4",1
 "IC vs Trucking_Local","log_Trucking_Local.l4",-0.838347123432478
 "IC vs Trucking_Local","trend.l4",-0.00117985691864263
+"IC vs Rail_Transportation","log_IC.l4",1
+"IC vs Rail_Transportation","log_Rail_Transportation.l4",-0.214941275290654
+"IC vs Rail_Transportation","trend.l4",-0.0027127573545122
+"IC vs Inland_Water_Freight","log_IC.l4",1
+"IC vs Inland_Water_Freight","log_Inland_Water_Freight.l4",-0.0528294941862982
+"IC vs Inland_Water_Freight","trend.l4",-0.0029916011975036
+"IC vs Deep_Sea_Freight","log_IC.l6",1
+"IC vs Deep_Sea_Freight","log_Deep_Sea_Freight.l6",0.198681719870885
+"IC vs Deep_Sea_Freight","trend.l6",-0.00397888635330624
 "IC vs Warehouse_Construction","log_IC.l4",1
 "IC vs Warehouse_Construction","log_Warehouse_Construction.l4",-0.404947135070536
 "IC vs Warehouse_Construction","trend.l4",-0.0014794487365364
