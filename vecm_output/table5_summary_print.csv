@@ -1,0 +1,5 @@
+"Model","Pair","K","Trace r","lmax r","LR elasticity","alpha_mode","alpha_IC","|alpha_mode|","|alpha_IC|","Faster adjuster","Asymmetric","HL mode","HL IC","LB clean"
+"Model 1","log LTL trucking + log IC",6,2,2,"-0.128","-0.1233***","-0.0089","0.1233","0.0089","log_Trucking_LD_LTL","YES","5.27","n.a.","YES"
+"Model 2","log truckload + log IC",5,2,0,"-1.722","-0.0461***","0.0040","0.0461","0.0040","log_Trucking_LD_Truckload","YES","14.68","n.a.","YES"
+"Model 3","log local trucking + log IC",4,1,0,"1.193","-0.0089","0.0184***","0.0089","0.0184","log_IC","YES","n.a.","n.a.","NO"
+"Model 4","log scheduled airfreight + log IC",5,1,1,"-1.529","-0.0499***","-0.0046","0.0499","0.0046","log_Airfreight_Scheduled","YES","13.55","n.a.","YES"

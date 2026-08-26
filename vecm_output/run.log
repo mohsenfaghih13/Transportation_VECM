@@ -1,0 +1,650 @@
+Loading required package: MASS
+Loading required package: strucchange
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Loading required package: sandwich
+Loading required package: lmtest
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:MASS’:
+
+    select
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+##############################
+Model 1 : log LTL trucking + log IC 
+##############################
+VARselect AIC/HQ/SC/FPE: 6, 2, 2, 6 
+                   1             2             3             4             5
+AIC(n) -1.867548e+01 -1.888684e+01 -1.886161e+01 -1.889752e+01 -1.889125e+01
+HQ(n)  -1.845541e+01 -1.863743e+01 -1.858286e+01 -1.858943e+01 -1.855382e+01
+SC(n)  -1.813295e+01 -1.827196e+01 -1.817440e+01 -1.813797e+01 -1.805937e+01
+FPE(n)  7.757256e-09  6.281822e-09  6.445431e-09  6.221853e-09  6.265574e-09
+                   6             7             8             9            10
+AIC(n) -1.891121e+01 -1.887971e+01 -1.884175e+01 -1.884057e+01 -1.880739e+01
+HQ(n)  -1.854443e+01 -1.848358e+01 -1.841628e+01 -1.838576e+01 -1.832325e+01
+SC(n)  -1.800698e+01 -1.790314e+01 -1.779285e+01 -1.771933e+01 -1.761382e+01
+FPE(n)  6.147196e-09  6.350466e-09  6.604075e-09  6.621048e-09  6.855205e-09
+                  11            12
+AIC(n) -1.878218e+01 -1.874555e+01
+HQ(n)  -1.826869e+01 -1.820272e+01
+SC(n)  -1.751627e+01 -1.740730e+01
+FPE(n)  7.042860e-09  7.320399e-09
+
+--- Trace ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: trace statistic , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 1.204859e-01 7.565040e-02 1.387779e-17
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 | 14.24 10.49 12.25 16.26
+r = 0  | 37.48 22.76 25.32 30.45
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                       log_Trucking_LD_LTL.l6     log_IC.l6     trend.l6
+log_Trucking_LD_LTL.l6             1.00000000  1.0000000000  1.000000000
+log_IC.l6                          0.12838111 -1.2320465339 -0.999929676
+trend.l6                          -0.00422544  0.0001769394  0.002212467
+
+Weights W:
+(This is the loading matrix)
+
+                      log_Trucking_LD_LTL.l6   log_IC.l6      trend.l6
+log_Trucking_LD_LTL.d           -0.123337682 -0.01028552 -1.235283e-14
+log_IC.d                        -0.008933103  0.03784962 -2.427819e-13
+
+
+--- Max-eigen ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: maximal eigenvalue statistic (lambda max) , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 1.204859e-01 7.565040e-02 1.387779e-17
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 | 14.24 10.49 12.25 16.26
+r = 0  | 23.24 16.85 18.96 23.65
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                       log_Trucking_LD_LTL.l6     log_IC.l6     trend.l6
+log_Trucking_LD_LTL.l6             1.00000000  1.0000000000  1.000000000
+log_IC.l6                          0.12838111 -1.2320465339 -0.999929676
+trend.l6                          -0.00422544  0.0001769394  0.002212467
+
+Weights W:
+(This is the loading matrix)
+
+                      log_Trucking_LD_LTL.l6   log_IC.l6      trend.l6
+log_Trucking_LD_LTL.d           -0.123337682 -0.01028552 -1.235283e-14
+log_IC.d                        -0.008933103  0.03784962 -2.427819e-13
+
+VECM terms:
+ [1] "ect1"                    "constant"               
+ [3] "sd1"                     "sd2"                    
+ [5] "sd3"                     "sd4"                    
+ [7] "sd5"                     "sd6"                    
+ [9] "sd7"                     "sd8"                    
+[11] "sd9"                     "sd10"                   
+[13] "sd11"                    "log_Trucking_LD_LTL.dl1"
+[15] "log_IC.dl1"              "log_Trucking_LD_LTL.dl2"
+[17] "log_IC.dl2"              "log_Trucking_LD_LTL.dl3"
+[19] "log_IC.dl3"              "log_Trucking_LD_LTL.dl4"
+[21] "log_IC.dl4"              "log_Trucking_LD_LTL.dl5"
+[23] "log_IC.dl5"             
+Model 1: K(AIC)=6 (SBC=2, used=6). Trace r=2, lmax r=2. Faster |alpha|: log_Trucking_LD_LTL. Asymmetric: YES. 
+
+##############################
+Model 2 : log truckload + log IC 
+##############################
+VARselect AIC/HQ/SC/FPE: 5, 2, 2, 5 
+                   1             2             3             4             5
+AIC(n) -1.829662e+01 -1.839207e+01 -1.836994e+01 -1.838846e+01 -1.842547e+01
+HQ(n)  -1.807655e+01 -1.814266e+01 -1.809119e+01 -1.808036e+01 -1.808803e+01
+SC(n)  -1.775409e+01 -1.777720e+01 -1.768273e+01 -1.762891e+01 -1.759358e+01
+FPE(n)  1.133038e-08  1.030290e-08  1.053858e-08  1.035151e-08  9.982749e-09
+                   6             7             8             9            10
+AIC(n) -1.840438e+01 -1.837879e+01 -1.834652e+01 -1.836631e+01 -1.833469e+01
+HQ(n)  -1.803760e+01 -1.798267e+01 -1.792106e+01 -1.791150e+01 -1.785054e+01
+SC(n)  -1.750016e+01 -1.740223e+01 -1.729762e+01 -1.724507e+01 -1.714111e+01
+FPE(n)  1.020440e-08  1.047970e-08  1.083646e-08  1.063887e-08  1.099802e-08
+                  11            12
+AIC(n) -1.830299e+01 -1.827227e+01
+HQ(n)  -1.778950e+01 -1.772943e+01
+SC(n)  -1.703708e+01 -1.693401e+01
+FPE(n)  1.137256e-08  1.175116e-08
+
+--- Trace ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: trace statistic , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 9.680178e-02 7.849741e-02 1.387779e-17
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 | 14.88 10.49 12.25 16.26
+r = 0  | 33.41 22.76 25.32 30.45
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                             log_Trucking_LD_Truckload.l5    log_IC.l5
+log_Trucking_LD_Truckload.l5                  1.000000000  1.000000000
+log_IC.l5                                     1.722327481 -2.111742659
+trend.l5                                     -0.008891311  0.003867133
+                                trend.l5
+log_Trucking_LD_Truckload.l5  1.00000000
+log_IC.l5                    -0.96446206
+trend.l5                      0.00460752
+
+Weights W:
+(This is the loading matrix)
+
+                            log_Trucking_LD_Truckload.l5  log_IC.l5
+log_Trucking_LD_Truckload.d                 -0.046117646 0.03190537
+log_IC.d                                     0.003968243 0.01748461
+                                 trend.l5
+log_Trucking_LD_Truckload.d -3.339580e-15
+log_IC.d                    -8.981316e-16
+
+
+--- Max-eigen ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: maximal eigenvalue statistic (lambda max) , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 9.680178e-02 7.849741e-02 1.387779e-17
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 | 14.88 10.49 12.25 16.26
+r = 0  | 18.53 16.85 18.96 23.65
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                             log_Trucking_LD_Truckload.l5    log_IC.l5
+log_Trucking_LD_Truckload.l5                  1.000000000  1.000000000
+log_IC.l5                                     1.722327481 -2.111742659
+trend.l5                                     -0.008891311  0.003867133
+                                trend.l5
+log_Trucking_LD_Truckload.l5  1.00000000
+log_IC.l5                    -0.96446206
+trend.l5                      0.00460752
+
+Weights W:
+(This is the loading matrix)
+
+                            log_Trucking_LD_Truckload.l5  log_IC.l5
+log_Trucking_LD_Truckload.d                 -0.046117646 0.03190537
+log_IC.d                                     0.003968243 0.01748461
+                                 trend.l5
+log_Trucking_LD_Truckload.d -3.339580e-15
+log_IC.d                    -8.981316e-16
+
+VECM terms:
+ [1] "ect1"                          "constant"                     
+ [3] "sd1"                           "sd2"                          
+ [5] "sd3"                           "sd4"                          
+ [7] "sd5"                           "sd6"                          
+ [9] "sd7"                           "sd8"                          
+[11] "sd9"                           "sd10"                         
+[13] "sd11"                          "log_Trucking_LD_Truckload.dl1"
+[15] "log_IC.dl1"                    "log_Trucking_LD_Truckload.dl2"
+[17] "log_IC.dl2"                    "log_Trucking_LD_Truckload.dl3"
+[19] "log_IC.dl3"                    "log_Trucking_LD_Truckload.dl4"
+[21] "log_IC.dl4"                   
+Model 2: K(AIC)=5 (SBC=2, used=5). Trace r=2, lmax r=0. Faster |alpha|: log_Trucking_LD_Truckload. Asymmetric: YES. 
+
+##############################
+Model 3 : log local trucking + log IC 
+##############################
+VARselect AIC/HQ/SC/FPE: 4, 4, 2, 4 
+                   1             2             3             4             5
+AIC(n) -1.880372e+01 -1.893712e+01 -1.895463e+01 -1.904334e+01 -1.902262e+01
+HQ(n)  -1.858365e+01 -1.868771e+01 -1.867588e+01 -1.873524e+01 -1.868518e+01
+SC(n)  -1.826118e+01 -1.832225e+01 -1.826742e+01 -1.828379e+01 -1.819073e+01
+FPE(n)  6.823644e-09  5.973740e-09  5.872922e-09  5.377647e-09  5.494288e-09
+                   6             7             8             9            10
+AIC(n) -1.903869e+01 -1.900482e+01 -1.898165e+01 -1.894183e+01 -1.896488e+01
+HQ(n)  -1.867191e+01 -1.860870e+01 -1.855619e+01 -1.848702e+01 -1.848073e+01
+SC(n)  -1.813446e+01 -1.802826e+01 -1.793275e+01 -1.782059e+01 -1.777130e+01
+FPE(n)  5.411440e-09  5.603638e-09  5.741851e-09  5.983401e-09  5.856323e-09
+                  11            12
+AIC(n) -1.894967e+01 -1.891353e+01
+HQ(n)  -1.843618e+01 -1.837070e+01
+SC(n)  -1.768376e+01 -1.757528e+01
+FPE(n)  5.956739e-09  6.188465e-09
+
+--- Trace ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: trace statistic , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 0.07708941 0.06374080 0.00000000
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 | 12.05 10.49 12.25 16.26
+r = 0  | 26.73 22.76 25.32 30.45
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                      log_Trucking_Local.l4   log_IC.l4     trend.l4
+log_Trucking_Local.l4           1.000000000  1.00000000  1.000000000
+log_IC.l4                      -1.192823321  2.94438350 -0.726889616
+trend.l4                        0.001407361 -0.01231209  0.002722589
+
+Weights W:
+(This is the loading matrix)
+
+                     log_Trucking_Local.l4    log_IC.l4     trend.l4
+log_Trucking_Local.d          -0.008940616 -0.022630999 7.161321e-15
+log_IC.d                       0.018370180 -0.003897593 1.651299e-15
+
+
+--- Max-eigen ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: maximal eigenvalue statistic (lambda max) , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 0.07708941 0.06374080 0.00000000
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 | 12.05 10.49 12.25 16.26
+r = 0  | 14.68 16.85 18.96 23.65
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                      log_Trucking_Local.l4   log_IC.l4     trend.l4
+log_Trucking_Local.l4           1.000000000  1.00000000  1.000000000
+log_IC.l4                      -1.192823321  2.94438350 -0.726889616
+trend.l4                        0.001407361 -0.01231209  0.002722589
+
+Weights W:
+(This is the loading matrix)
+
+                     log_Trucking_Local.l4    log_IC.l4     trend.l4
+log_Trucking_Local.d          -0.008940616 -0.022630999 7.161321e-15
+log_IC.d                       0.018370180 -0.003897593 1.651299e-15
+
+VECM terms:
+ [1] "ect1"                   "constant"               "sd1"                   
+ [4] "sd2"                    "sd3"                    "sd4"                   
+ [7] "sd5"                    "sd6"                    "sd7"                   
+[10] "sd8"                    "sd9"                    "sd10"                  
+[13] "sd11"                   "log_Trucking_Local.dl1" "log_IC.dl1"            
+[16] "log_Trucking_Local.dl2" "log_IC.dl2"             "log_Trucking_Local.dl3"
+[19] "log_IC.dl3"            
+Model 3: K(AIC)=4 (SBC=2, used=4). Trace r=1, lmax r=0. Faster |alpha|: log_IC. Asymmetric: YES. 
+
+##############################
+Model 4 : log scheduled airfreight + log IC 
+##############################
+VARselect AIC/HQ/SC/FPE: 5, 5, 3, 5 
+                   1             2             3             4             5
+AIC(n) -1.827076e+01 -1.847289e+01 -1.855164e+01 -1.860204e+01 -1.866758e+01
+HQ(n)  -1.805069e+01 -1.822348e+01 -1.827288e+01 -1.829395e+01 -1.833015e+01
+SC(n)  -1.772823e+01 -1.785801e+01 -1.786443e+01 -1.784249e+01 -1.783570e+01
+FPE(n)  1.162721e-08  9.503015e-09  8.787663e-09  8.360756e-09  7.836101e-09
+                   6             7             8             9            10
+AIC(n) -1.864825e+01 -1.863042e+01 -1.860394e+01 -1.857842e+01 -1.854550e+01
+HQ(n)  -1.828147e+01 -1.823430e+01 -1.817848e+01 -1.812362e+01 -1.806135e+01
+SC(n)  -1.774402e+01 -1.765386e+01 -1.755504e+01 -1.745719e+01 -1.735193e+01
+FPE(n)  7.996099e-09  8.148339e-09  8.377028e-09  8.605455e-09  8.907546e-09
+                  11            12
+AIC(n) -1.852310e+01 -1.849861e+01
+HQ(n)  -1.800961e+01 -1.795577e+01
+SC(n)  -1.725719e+01 -1.716035e+01
+FPE(n)  9.125679e-09  9.370917e-09
+
+--- Trace ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: trace statistic , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 1.254516e-01 4.397642e-02 3.863146e-18
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 |  8.19 10.49 12.25 16.26
+r = 0  | 32.58 22.76 25.32 30.45
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                            log_Airfreight_Scheduled.l5    log_IC.l5
+log_Airfreight_Scheduled.l5                 1.000000000  1.000000000
+log_IC.l5                                   1.528645277 -1.360342219
+trend.l5                                   -0.005315719  0.003305041
+                                trend.l5
+log_Airfreight_Scheduled.l5  1.000000000
+log_IC.l5                    0.333585635
+trend.l5                    -0.004786581
+
+Weights W:
+(This is the loading matrix)
+
+                           log_Airfreight_Scheduled.l5   log_IC.l5     trend.l5
+log_Airfreight_Scheduled.d                -0.049881237 -0.02450796 1.622888e-13
+log_IC.d                                  -0.004602558  0.02317735 1.433246e-13
+
+
+--- Max-eigen ---
+
+###################### 
+# Johansen-Procedure # 
+###################### 
+
+Test type: maximal eigenvalue statistic (lambda max) , with linear trend in cointegration 
+
+Eigenvalues (lambda):
+[1] 1.254516e-01 4.397642e-02 3.863146e-18
+
+Values of teststatistic and critical values of test:
+
+          test 10pct  5pct  1pct
+r <= 1 |  8.19 10.49 12.25 16.26
+r = 0  | 24.40 16.85 18.96 23.65
+
+Eigenvectors, normalised to first column:
+(These are the cointegration relations)
+
+                            log_Airfreight_Scheduled.l5    log_IC.l5
+log_Airfreight_Scheduled.l5                 1.000000000  1.000000000
+log_IC.l5                                   1.528645277 -1.360342219
+trend.l5                                   -0.005315719  0.003305041
+                                trend.l5
+log_Airfreight_Scheduled.l5  1.000000000
+log_IC.l5                    0.333585635
+trend.l5                    -0.004786581
+
+Weights W:
+(This is the loading matrix)
+
+                           log_Airfreight_Scheduled.l5   log_IC.l5     trend.l5
+log_Airfreight_Scheduled.d                -0.049881237 -0.02450796 1.622888e-13
+log_IC.d                                  -0.004602558  0.02317735 1.433246e-13
+
+VECM terms:
+ [1] "ect1"                         "constant"                    
+ [3] "sd1"                          "sd2"                         
+ [5] "sd3"                          "sd4"                         
+ [7] "sd5"                          "sd6"                         
+ [9] "sd7"                          "sd8"                         
+[11] "sd9"                          "sd10"                        
+[13] "sd11"                         "log_Airfreight_Scheduled.dl1"
+[15] "log_IC.dl1"                   "log_Airfreight_Scheduled.dl2"
+[17] "log_IC.dl2"                   "log_Airfreight_Scheduled.dl3"
+[19] "log_IC.dl3"                   "log_Airfreight_Scheduled.dl4"
+[21] "log_IC.dl4"                  
+Model 4: K(AIC)=5 (SBC=3, used=5). Trace r=1, lmax r=1. Faster |alpha|: log_Airfreight_Scheduled. Asymmetric: YES. 
+
+
+========== TABLE 1: Johansen tests ==========
+   Model                              Pair K Trace r=0 CV 5% r=0 Trace r<=1
+ Model 1         log LTL trucking + log IC 6    37.476     25.32     14.238
+ Model 2            log truckload + log IC 5    33.408     25.32     14.878
+ Model 3       log local trucking + log IC 4    26.734     25.32     12.053
+ Model 4 log scheduled airfreight + log IC 5    32.582     25.32      8.185
+ CV 5% r<=1           Trace rank lmax r=0 CV 5% lmax r=0 lmax r<=1
+      12.25    r = 2 (full rank)   23.238          18.96    14.238
+      12.25    r = 2 (full rank)   18.530          18.96    14.878
+      12.25 r = 1 (cointegrated)   14.681          18.96    12.053
+      12.25 r = 1 (cointegrated)   24.397          18.96     8.185
+                lmax rank
+        r = 2 (full rank)
+ r = 0 (not cointegrated)
+ r = 0 (not cointegrated)
+     r = 1 (cointegrated)
+                                                  Conclusion
+           Trace: r = 2 (full rank); lmax: r = 2 (full rank)
+    Trace: r = 2 (full rank); lmax: r = 0 (not cointegrated)
+ Trace: r = 1 (cointegrated); lmax: r = 0 (not cointegrated)
+     Trace: r = 1 (cointegrated); lmax: r = 1 (cointegrated)
+
+========== TABLE 2: ECT and diagnostics ==========
+   Model                              Pair alpha_mode t_mode  alpha_IC   t_IC
+ Model 1         log LTL trucking + log IC -0.1233*** -4.626   -0.0089 -0.845
+ Model 2            log truckload + log IC -0.0461*** -3.679    0.0040  1.192
+ Model 3       log local trucking + log IC    -0.0089 -0.574 0.0184***  3.265
+ Model 4 log scheduled airfreight + log IC -0.0499*** -4.558   -0.0046 -1.348
+      AIC      SBC LB p (mode) LB p (IC) No AC (both, 5%)
+ -3410.79 -3263.66       0.943     0.998              YES
+ -3336.65 -3202.08       0.365     0.805              YES
+ -3475.65 -3353.69       0.003     0.961               NO
+ -3380.29 -3245.72       0.642     0.897              YES
+
+========== TABLE 3: Cointegrating vectors (mode = 1) ==========
+   Model                              Pair beta_Mode beta_IC beta_trend
+ Model 1         log LTL trucking + log IC    1.0000  0.1284    -0.0042
+ Model 2            log truckload + log IC    1.0000  1.7223    -0.0089
+ Model 3       log local trucking + log IC    1.0000 -1.1928     0.0014
+ Model 4 log scheduled airfreight + log IC    1.0000  1.5286    -0.0053
+ LR elasticity (mode wrt IC)
+                     -0.1284
+                     -1.7223
+                      1.1928
+                     -1.5286
+                                                                                          Interpretation
+       A 1% rise in inventories is associated with a 0.128% decrease in Trucking_LD_LTL in the long run.
+ A 1% rise in inventories is associated with a 1.722% decrease in Trucking_LD_Truckload in the long run.
+        A 1% rise in inventories is associated with a 1.193% increase in Trucking_Local in the long run.
+  A 1% rise in inventories is associated with a 1.529% decrease in Airfreight_Scheduled in the long run.
+
+========== TABLE 4: Half-lives ==========
+   Model                  Variable      alpha      t Half-life (months)
+ Model 1       log_Trucking_LD_LTL -0.1233*** -4.626               5.27
+ Model 1                    log_IC    -0.0089 -0.845               n.a.
+ Model 2 log_Trucking_LD_Truckload -0.0461*** -3.679              14.68
+ Model 2                    log_IC     0.0040  1.192               n.a.
+ Model 3        log_Trucking_Local    -0.0089 -0.574               n.a.
+ Model 3                    log_IC  0.0184***  3.265               n.a.
+ Model 4  log_Airfreight_Scheduled -0.0499*** -4.558              13.55
+ Model 4                    log_IC    -0.0046 -1.348               n.a.
+                                                Note
+                   5.27 months to close half the gap
+                        alpha not significant at 10%
+                  14.68 months to close half the gap
+                        alpha not significant at 10%
+                        alpha not significant at 10%
+ alpha not in (-1, 0); half-life formula not defined
+                  13.55 months to close half the gap
+                        alpha not significant at 10%
+
+========== TABLE 5: Summary comparison ==========
+   Model                              Pair K Trace r lmax r LR elasticity
+ Model 1         log LTL trucking + log IC 6       2      2        -0.128
+ Model 2            log truckload + log IC 5       2      0        -1.722
+ Model 3       log local trucking + log IC 4       1      0         1.193
+ Model 4 log scheduled airfreight + log IC 5       1      1        -1.529
+ alpha_mode  alpha_IC |alpha_mode| |alpha_IC|           Faster adjuster
+ -0.1233***   -0.0089       0.1233     0.0089       log_Trucking_LD_LTL
+ -0.0461***    0.0040       0.0461     0.0040 log_Trucking_LD_Truckload
+    -0.0089 0.0184***       0.0089     0.0184                    log_IC
+ -0.0499***   -0.0046       0.0499     0.0046  log_Airfreight_Scheduled
+ Asymmetric HL mode HL IC LB clean
+        YES    5.27  n.a.      YES
+        YES   14.68  n.a.      YES
+        YES    n.a.  n.a.       NO
+        YES   13.55  n.a.      YES
+
+========== VECM coefficients (ECT + lags 1-3) ==========
+   Model                  Equation                          Term   Estimate
+ Model 1       log_Trucking_LD_LTL                          ect1 -0.1233***
+ Model 1       log_Trucking_LD_LTL       log_Trucking_LD_LTL.dl1 -0.2501***
+ Model 1       log_Trucking_LD_LTL                    log_IC.dl1  0.6233***
+ Model 1       log_Trucking_LD_LTL       log_Trucking_LD_LTL.dl2    -0.1187
+ Model 1       log_Trucking_LD_LTL                    log_IC.dl2    -0.1246
+ Model 1       log_Trucking_LD_LTL       log_Trucking_LD_LTL.dl3    -0.1098
+ Model 1       log_Trucking_LD_LTL                    log_IC.dl3     0.2007
+ Model 1                    log_IC                          ect1    -0.0089
+ Model 1                    log_IC       log_Trucking_LD_LTL.dl1     0.0169
+ Model 1                    log_IC                    log_IC.dl1  0.2797***
+ Model 1                    log_IC       log_Trucking_LD_LTL.dl2     0.0272
+ Model 1                    log_IC                    log_IC.dl2     0.0953
+ Model 1                    log_IC       log_Trucking_LD_LTL.dl3    -0.0009
+ Model 1                    log_IC                    log_IC.dl3  0.2395***
+ Model 2 log_Trucking_LD_Truckload                          ect1 -0.0461***
+ Model 2 log_Trucking_LD_Truckload log_Trucking_LD_Truckload.dl1    -0.0577
+ Model 2 log_Trucking_LD_Truckload                    log_IC.dl1  0.8218***
+ Model 2 log_Trucking_LD_Truckload log_Trucking_LD_Truckload.dl2    -0.1201
+ Model 2 log_Trucking_LD_Truckload                    log_IC.dl2     0.4249
+ Model 2 log_Trucking_LD_Truckload log_Trucking_LD_Truckload.dl3     0.0565
+ Model 2 log_Trucking_LD_Truckload                    log_IC.dl3     0.0269
+ Model 2                    log_IC                          ect1     0.0040
+ Model 2                    log_IC log_Trucking_LD_Truckload.dl1  0.0828***
+ Model 2                    log_IC                    log_IC.dl1   0.1779**
+ Model 2                    log_IC log_Trucking_LD_Truckload.dl2    0.0446*
+ Model 2                    log_IC                    log_IC.dl2     0.0289
+ Model 2                    log_IC log_Trucking_LD_Truckload.dl3   0.0536**
+ Model 2                    log_IC                    log_IC.dl3   0.1609**
+ Model 3        log_Trucking_Local                          ect1    -0.0089
+ Model 3        log_Trucking_Local        log_Trucking_Local.dl1     0.0133
+ Model 3        log_Trucking_Local                    log_IC.dl1     0.2845
+ Model 3        log_Trucking_Local        log_Trucking_Local.dl2    -0.0012
+ Model 3        log_Trucking_Local                    log_IC.dl2    -0.2237
+ Model 3        log_Trucking_Local        log_Trucking_Local.dl3   0.1825**
+ Model 3        log_Trucking_Local                    log_IC.dl3     0.2356
+ Model 3                    log_IC                          ect1  0.0184***
+ Model 3                    log_IC        log_Trucking_Local.dl1     0.0126
+ Model 3                    log_IC                    log_IC.dl1  0.2522***
+ Model 3                    log_IC        log_Trucking_Local.dl2  0.0868***
+ Model 3                    log_IC                    log_IC.dl2     0.0055
+ Model 3                    log_IC        log_Trucking_Local.dl3    -0.0148
+ Model 3                    log_IC                    log_IC.dl3  0.2066***
+ Model 4  log_Airfreight_Scheduled                          ect1 -0.0499***
+ Model 4  log_Airfreight_Scheduled  log_Airfreight_Scheduled.dl1   -0.1356*
+ Model 4  log_Airfreight_Scheduled                    log_IC.dl1     0.0466
+ Model 4  log_Airfreight_Scheduled  log_Airfreight_Scheduled.dl2    -0.0168
+ Model 4  log_Airfreight_Scheduled                    log_IC.dl2     0.2735
+ Model 4  log_Airfreight_Scheduled  log_Airfreight_Scheduled.dl3  -0.1732**
+ Model 4  log_Airfreight_Scheduled                    log_IC.dl3    -0.1719
+ Model 4                    log_IC                          ect1    -0.0046
+ Model 4                    log_IC  log_Airfreight_Scheduled.dl1     0.0104
+ Model 4                    log_IC                    log_IC.dl1  0.2608***
+ Model 4                    log_IC  log_Airfreight_Scheduled.dl2  0.0882***
+ Model 4                    log_IC                    log_IC.dl2     0.1289
+ Model 4                    log_IC  log_Airfreight_Scheduled.dl3     0.0056
+ Model 4                    log_IC                    log_IC.dl3  0.2196***
+ t-stat p-value
+ -4.626  0.0000
+ -3.233  0.0015
+  3.130  0.0021
+ -1.529  0.1282
+ -0.592  0.5549
+ -1.418  0.1580
+  0.962  0.3373
+ -0.845  0.3995
+  0.552  0.5815
+  3.541  0.0005
+  0.882  0.3792
+  1.141  0.2555
+ -0.030  0.9758
+  2.895  0.0043
+ -3.679  0.0003
+ -0.711  0.4780
+  2.757  0.0065
+ -1.400  0.1635
+  1.434  0.1535
+  0.645  0.5195
+  0.093  0.9258
+  1.192  0.2351
+  3.839  0.0002
+  2.246  0.0261
+  1.958  0.0520
+  0.367  0.7138
+  2.306  0.0224
+  2.102  0.0371
+ -0.574  0.5668
+  0.166  0.8686
+  1.284  0.2009
+ -0.015  0.9881
+ -1.035  0.3022
+  2.243  0.0263
+  1.167  0.2450
+  3.265  0.0013
+  0.433  0.6659
+  3.152  0.0019
+  3.038  0.0028
+  0.071  0.9438
+ -0.503  0.6156
+  2.834  0.0052
+ -4.558  0.0000
+ -1.824  0.0701
+  0.184  0.8541
+ -0.226  0.8216
+  1.076  0.2836
+ -2.212  0.0284
+ -0.718  0.4736
+ -1.348  0.1797
+  0.447  0.6554
+  3.303  0.0012
+  3.798  0.0002
+  1.625  0.1062
+  0.231  0.8178
+  2.940  0.0038
+
+CSV tables written to vecm_output/
+Done.

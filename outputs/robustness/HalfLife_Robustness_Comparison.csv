@@ -1,0 +1,5 @@
+"Model","Variable","HL_Primary_IC","HL_Warehouse_Construction","HL_Warehousing_Storage","Are_results_robust"
+1,"LTL",5.2657392701979,3.37675263876576,NA,"NO"
+2,"Truckload",14.6806768127245,NA,17.7502320040684,"NO"
+3,"Local",NA,NA,NA,"SIMILAR"
+4,"Airfreight",13.5464209899094,4.47633528214716,NA,"NO"

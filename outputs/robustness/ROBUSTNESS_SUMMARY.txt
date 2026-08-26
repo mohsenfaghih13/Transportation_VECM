@@ -1,0 +1,65 @@
+ROBUSTNESS SUMMARY
+Alternative IC: Warehouse_Construction and Warehousing_Storage (logs).
+Primary IC: Census MTIS Total_Inventories.
+Same spec: ecdet=trend, spec=longrun, season=12, K=AIC, VECM r=1.
+
+LTL (Model 1):
+  Primary IC (mode α): -0.1233***  (HL=5.27 months)
+  Warehouse_Construction (mode α): -0.1856***  (HL=3.38 months)
+  Warehousing_Storage (mode α): -0.0370  (HL=n.a. months)
+  IC-proxy α: Primary -0.0089 | WhseConstr 0.0014 | WhseStor 0.0669***
+  Who adjusts: Primary mode | WhseConstr mode | WhseStor IC_proxy
+  ASSESSMENT: NOT ROBUST
+
+Truckload (Model 2):
+  Primary IC (mode α): -0.0461***  (HL=14.68 months)
+  Warehouse_Construction (mode α): -0.0242  (HL=n.a. months)
+  Warehousing_Storage (mode α): -0.0383*  (HL=17.75 months)
+  IC-proxy α: Primary 0.0040 | WhseConstr 0.0744*** | WhseStor 0.0369***
+  Who adjusts: Primary mode | WhseConstr IC_proxy | WhseStor mode
+  ASSESSMENT: NOT ROBUST
+
+Local (Model 3):
+  Primary IC (mode α): -0.0089  (HL=n.a. months)
+  Warehouse_Construction (mode α): -0.0271  (HL=n.a. months)
+  Warehousing_Storage (mode α): -0.0319  (HL=n.a. months)
+  IC-proxy α: Primary 0.0184*** | WhseConstr 0.0719*** | WhseStor 0.0484**
+  Who adjusts: Primary IC | WhseConstr IC_proxy | WhseStor IC_proxy
+  ASSESSMENT: PARTIALLY ROBUST
+
+Airfreight (Model 4):
+  Primary IC (mode α): -0.0499***  (HL=13.55 months)
+  Warehouse_Construction (mode α): -0.1435***  (HL=4.48 months)
+  Warehousing_Storage (mode α): -0.0161  (HL=n.a. months)
+  IC-proxy α: Primary -0.0046 | WhseConstr 0.0173 | WhseStor 0.0416***
+  Who adjusts: Primary mode | WhseConstr mode | WhseStor IC_proxy
+  ASSESSMENT: NOT ROBUST
+
+
+ANSWERS TO THE FIVE QUESTIONS
+
+1. Model 1 (LTL): NO. Mode α stays negative vs Warehouse_Construction (-0.186***)
+   but loses significance vs Warehousing_Storage (-0.037, p=0.16). Half-lives
+   5.3 vs 3.4 vs n.a. The LTL finding is sensitive to how IC is measured.
+
+2. Model 2 (Truckload): NO. Mode α is only marginally significant vs storage
+   (-0.038*, p=0.057) and insignificant vs construction (-0.024). Construction
+   proxy, not truckload, does the error-correction. Expanding lag.max to 12
+   also drops the storage-pair Johansen rank from r=1 to r=0.
+
+3. Model 3 (Local): YES for the opposite pattern. Local-rate α is insignificant
+   in all three IC measures. The IC / IC-proxy loading is positive and
+   significant in all three (0.018***, 0.072***, 0.048**). Inventories (or
+   the warehouse proxy) remain the adjusting variable.
+
+4. Model 4 (Airfreight): NO. Mode α is -0.050*** vs Census IC and -0.144*** vs
+   construction, but insignificant vs storage (-0.016). Storage makes the
+   warehouse proxy the adjuster instead of airfreight.
+
+5. Overall: Mode-level heterogeneity is NOT fully robust to replacing Census
+   MTIS IC with warehouse cost indexes. The one robust fact is local trucking:
+   the mode does not error-correct; the inventory-side variable does. LTL,
+   truckload, and airfreight mode-driven adjustment is fragile to the IC proxy.
+   Do not claim asymmetric mode-level adjustment as a general phenomenon on
+   the basis of Census IC alone.
+

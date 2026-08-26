@@ -1,0 +1,5 @@
+"model","pair","AIC_K","SBC_K","K_used","note"
+"Model 1","log LTL trucking + log IC",6,2,6,"AIC and SBC disagree; AIC used (ca.jo requires K >= 2)"
+"Model 2","log truckload + log IC",5,2,5,"AIC and SBC disagree; AIC used (ca.jo requires K >= 2)"
+"Model 3","log local trucking + log IC",4,2,4,"AIC and SBC disagree; AIC used (ca.jo requires K >= 2)"
+"Model 4","log scheduled airfreight + log IC",5,3,5,"AIC and SBC disagree; AIC used (ca.jo requires K >= 2)"

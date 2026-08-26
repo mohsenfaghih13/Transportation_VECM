@@ -1,0 +1,5 @@
+"Model","Pair","K","Trace r=0","CV 5% r=0","Trace r<=1","CV 5% r<=1","Trace rank","lmax r=0","CV 5% lmax r=0","lmax r<=1","lmax rank","Conclusion"
+"Model 1","log LTL trucking + log IC",6,"37.476","25.32","14.238","12.25","r = 2 (full rank)","23.238","18.96","14.238","r = 2 (full rank)","Trace: r = 2 (full rank); lmax: r = 2 (full rank)"
+"Model 2","log truckload + log IC",5,"33.408","25.32","14.878","12.25","r = 2 (full rank)","18.530","18.96","14.878","r = 0 (not cointegrated)","Trace: r = 2 (full rank); lmax: r = 0 (not cointegrated)"
+"Model 3","log local trucking + log IC",4,"26.734","25.32","12.053","12.25","r = 1 (cointegrated)","14.681","18.96","12.053","r = 0 (not cointegrated)","Trace: r = 1 (cointegrated); lmax: r = 0 (not cointegrated)"
+"Model 4","log scheduled airfreight + log IC",5,"32.582","25.32","8.185","12.25","r = 1 (cointegrated)","24.397","18.96","8.185","r = 1 (cointegrated)","Trace: r = 1 (cointegrated); lmax: r = 1 (cointegrated)"
