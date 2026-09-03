@@ -1,5 +1,0 @@
-"Model","Variable","faster_Primary","faster_WhseConstr","faster_WhseStor","mode_sig_Primary","IC_sig_Primary","mode_sig_WhseConstr","IC_sig_WhseConstr","mode_sig_WhseStor","IC_sig_WhseStor"
-1,"LTL","mode","mode","IC_proxy",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE
-2,"Truckload","mode","IC_proxy","mode",TRUE,FALSE,FALSE,TRUE,FALSE,TRUE
-3,"Local","IC","IC_proxy","IC_proxy",FALSE,TRUE,FALSE,TRUE,FALSE,TRUE
-4,"Airfreight","mode","mode","IC_proxy",TRUE,FALSE,TRUE,FALSE,FALSE,TRUE

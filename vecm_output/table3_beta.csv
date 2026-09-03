@@ -1,5 +1,0 @@
-"model","pair","beta_log_Mode","beta_log_IC","beta_trend","lr_elasticity_mode_wrt_IC","interpretation"
-"Model 1","log LTL trucking + log IC",1,0.128381108352287,-0.00422544000744486,-0.128381108352287,"A 1% rise in inventories is associated with a 0.128% decrease in Trucking_LD_LTL in the long run."
-"Model 2","log truckload + log IC",1,1.72232748059545,-0.0088913105376521,-1.72232748059545,"A 1% rise in inventories is associated with a 1.722% decrease in Trucking_LD_Truckload in the long run."
-"Model 3","log local trucking + log IC",1,-1.19282332090254,0.00140736084747797,1.19282332090254,"A 1% rise in inventories is associated with a 1.193% increase in Trucking_Local in the long run."
-"Model 4","log scheduled airfreight + log IC",1,1.52864527747227,-0.00531571882963817,-1.52864527747227,"A 1% rise in inventories is associated with a 1.529% decrease in Airfreight_Scheduled in the long run."
