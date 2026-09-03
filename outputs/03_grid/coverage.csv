@@ -1,0 +1,6 @@
+"run","label","requested_start","ic_series","n_months","actual_start","actual_end","crisis_months","ic_break"
+"A_common_censusIC","Census MTIS IC, common window","2003-01-01","Total_Inventories",253,"2003-12","2024-12",24,"2008-08"
+"B_common_whseconstr","Warehouse construction, common window","2009-06-01","Warehouse_Construction",187,"2009-06","2024-12",7,"2021-09"
+"C_full_whseconstr","Warehouse construction, full window","2003-01-01","Warehouse_Construction",241,"2004-12","2024-12",24,"2021-09"
+"D_deflated_censusIC","Census MTIS IC, deflated by All-Commodities PPI","2003-01-01","Total_Inventories",253,"2003-12","2024-12",24,"2008-08"
+"E_prepandemic_censusIC","Pre-pandemic subsample (2003-2019), Census MTIS IC","2003-01-01","Total_Inventories",193,"2003-12","2019-12",24,"2008-08"

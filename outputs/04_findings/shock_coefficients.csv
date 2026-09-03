@@ -1,0 +1,17 @@
+"run","design","n","median_coef","median_p","sig_5pct"
+"A_common_censusIC","orig",16,0.0076,0.0075,15
+"A_common_censusIC","za_step",12,0.00063,0.6026,1
+"A_common_censusIC","za_window",10,0.00801,0.0519,5
+"A_common_censusIC","za_series",10,0.00394,0.4423,1
+"B_common_whseconstr","orig",9,0.00422,0.2368,3
+"B_common_whseconstr","za_step",15,-0.00285,0.1157,5
+"B_common_whseconstr","za_window",9,-0.00371,0.0972,3
+"B_common_whseconstr","za_series",11,0.0131,0.3687,0
+"C_full_whseconstr","orig",9,0.00651,0.0312,7
+"C_full_whseconstr","za_step",13,-0.00049,0.4833,1
+"C_full_whseconstr","za_window",9,-0.00305,0.4446,0
+"C_full_whseconstr","za_series",12,0.00197,0.3405,2
+"D_deflated_censusIC","orig",13,0.0038,0.1395,6
+"D_deflated_censusIC","za_step",8,-0.00145,0.4235,0
+"D_deflated_censusIC","za_window",11,0.01899,7e-04,6
+"D_deflated_censusIC","za_series",5,0.00521,0.0344,3

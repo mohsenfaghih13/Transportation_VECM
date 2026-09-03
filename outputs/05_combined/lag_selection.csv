@@ -1,0 +1,9 @@
+"system","dummies","AIC_K","SBC_K","HQ_K","FPE_K"
+"TL_Air_IC","none",4,2,2,4
+"TL_Air_IC","orig",5,2,2,5
+"TL_Air_IC","za_step",4,2,2,4
+"TL_Air_IC","za_window",5,2,2,5
+"LTL_Air_IC","none",3,2,3,3
+"LTL_Air_IC","orig",3,2,2,3
+"LTL_Air_IC","za_step",3,2,2,3
+"LTL_Air_IC","za_window",3,1,2,3

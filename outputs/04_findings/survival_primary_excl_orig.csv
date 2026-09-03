@@ -1,0 +1,5 @@
+"Model","identified","sig_negative","share","alpha_min","alpha_max","hl_min","hl_max"
+"LTL",13,2,0.154,-0.1309,-0.1116,4.9,5.9
+"Truckload",11,5,0.455,-0.0794,-0.0475,8.4,14.2
+"Local",6,4,0.667,-0.0603,-0.0426,11.1,15.9
+"Airfreight",5,2,0.4,-0.0621,-0.0181,10.8,37.9

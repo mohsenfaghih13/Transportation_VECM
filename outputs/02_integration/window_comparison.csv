@@ -1,0 +1,14 @@
+"series","n_max","order_max","n_common","order_common","changed"
+"Airfreight_NonScheduled",199,"I(1)",199,"I(1)",FALSE
+"Airfreight_Scheduled",253,"I(1)",253,"I(1)",FALSE
+"Deep_Sea_Freight",253,"I(1)",253,"I(1)",FALSE
+"Inland_Water_Freight",253,"I(1)",253,"I(1)",FALSE
+"PPI_All_Commodities",253,"I(1)",253,"I(1)",FALSE
+"Rail_Transportation",253,"I(1)",253,"I(1)",FALSE
+"TC_Aggregate_WPU30",187,"I(1)",187,"I(1)",FALSE
+"Total_Inventories",253,"I(1) (level tests disagree)",253,"I(1) (level tests disagree)",FALSE
+"Trucking_LD_LTL",253,"I(1)",253,"I(1)",FALSE
+"Trucking_LD_Truckload",253,"I(1)",253,"I(1)",FALSE
+"Trucking_Local",253,"I(1)",253,"I(1)",FALSE
+"Warehouse_Construction",241,"I(1)",241,"I(1)",FALSE
+"Warehousing_Storage",193,"inconclusive",193,"inconclusive",FALSE

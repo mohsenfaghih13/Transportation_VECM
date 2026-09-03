@@ -1,0 +1,6 @@
+"design","cells","identified","mode_sig","models"
+"none",24,3,0,""
+"orig",24,16,15,"Local, LTL, Truckload"
+"za_step",24,12,2,"Airfreight, Truckload"
+"za_window",24,10,8,"Local, LTL, Truckload"
+"za_series",24,10,5,"Airfreight, Local, Truckload"
