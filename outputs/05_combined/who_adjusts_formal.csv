@@ -1,0 +1,7 @@
+"system","variable","n","rejects_exogeneity"
+"LTL_Air_IC","Airfreight",8,0
+"LTL_Air_IC","IC",8,8
+"LTL_Air_IC","LTL",8,3
+"TL_Air_IC","Airfreight",10,0
+"TL_Air_IC","IC",10,8
+"TL_Air_IC","Truckload",10,6

@@ -1,0 +1,7 @@
+"system","equation","n","sig","sig_negative"
+"LTL_Air_IC","Airfreight",8,1,0
+"LTL_Air_IC","IC",8,8,0
+"LTL_Air_IC","LTL",8,3,1
+"TL_Air_IC","Airfreight",10,2,2
+"TL_Air_IC","IC",10,8,0
+"TL_Air_IC","Truckload",10,6,6
