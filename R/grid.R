@@ -125,6 +125,12 @@ fit_vecm <- function(jo, r, mode_col, ic_col) {
 
   ci_mode <- ci95(eq_m, "ect1"); ci_IC <- ci95(eq_i, "ect1")
 
+  # Residual diagnostic: a fitted equation's t-stats/p-values are only
+  # trustworthy if its residuals are clean of leftover autocorrelation.
+  resid_mat <- residuals(fit$rlm)
+  lb_mode <- ljung_box(resid_mat[, paste0(mode_col, ".d")])
+  lb_IC   <- ljung_box(resid_mat[, paste0(ic_col, ".d")])
+
   list(ok = TRUE, r = r, status = sprintf("estimated at r = %d", r),
        alpha_mode = grab(eq_m, "ect1", "estimate"),
        t_mode = grab(eq_m, "ect1", "t_stat"),
@@ -137,6 +143,8 @@ fit_vecm <- function(jo, r, mode_col, ic_col) {
        beta_ic = beta_ic, beta_det = beta_det, det_label = det_label,
        we_mode_LR = we_mode$LR, we_mode_p = we_mode$p,
        we_IC_LR = we_ic$LR, we_IC_p = we_ic$p,
+       lb_mode_stat = lb_mode$stat, lb_mode_p = lb_mode$p, lb_lag = lb_mode$lag,
+       lb_IC_stat = lb_IC$stat, lb_IC_p = lb_IC$p,
        shock_term = if (length(shock_terms)) shock_terms[1] else NA_character_,
        shock_coef = if (length(shock_terms)) grab(eq_m, shock_terms[1], "estimate") else NA_real_,
        shock_p = if (length(shock_terms)) grab(eq_m, shock_terms[1], "p_value") else NA_real_,
@@ -279,6 +287,8 @@ empty_result <- function(status) {
              beta_ic = NA_real_, beta_det = NA_real_, det_label = NA_character_,
              we_mode_LR = NA_real_, we_mode_p = NA_real_,
              we_IC_LR = NA_real_, we_IC_p = NA_real_,
+             lb_mode_stat = NA_real_, lb_mode_p = NA_real_, lb_lag = NA_integer_,
+             lb_IC_stat = NA_real_, lb_IC_p = NA_real_,
              hl_mode = NA_real_, shock_term = NA_character_,
              shock_coef = NA_real_, shock_p = NA_real_,
              crisis_coef = NA_real_, crisis_p = NA_real_, stringsAsFactors = FALSE)
@@ -311,6 +321,11 @@ result_row <- function(fit, tr, ei, r_det) {
     we_mode_p = if (ok) fit$we_mode_p else NA_real_,
     we_IC_LR = if (ok) fit$we_IC_LR else NA_real_,
     we_IC_p = if (ok) fit$we_IC_p else NA_real_,
+    lb_mode_stat = if (ok) fit$lb_mode_stat else NA_real_,
+    lb_mode_p = if (ok) fit$lb_mode_p else NA_real_,
+    lb_lag = if (ok) fit$lb_lag else NA_integer_,
+    lb_IC_stat = if (ok) fit$lb_IC_stat else NA_real_,
+    lb_IC_p = if (ok) fit$lb_IC_p else NA_real_,
     hl_mode = if (ok) half_life(fit$alpha_mode) else NA_real_,
     shock_term = if (ok) fit$shock_term else NA_character_,
     shock_coef = if (ok) fit$shock_coef else NA_real_,

@@ -26,6 +26,7 @@ write_out(COMB$cells,    "05_combined", "cells.csv")
 write_out(COMB$loadings, "05_combined", "loadings.csv")
 write_out(COMB$beta,     "05_combined", "cointegrating_vectors.csv")
 write_out(COMB$weak_exo, "05_combined", "weak_exogeneity.csv")
+write_out(COMB$ljung_box, "05_combined", "ljung_box.csv")
 write_out(COMB$lags,     "05_combined", "lag_selection.csv")
 
 cat("\nRank and status by system and dummy design\n")
@@ -109,6 +110,29 @@ if (!is.null(COMB$beta) && nrow(COMB$beta)) {
                     lag = bt$lag_rule, K = bt$K, ect_term = bt$ect_term,
                     row = bt$row, coefficient = fmt_num(bt$coefficient, 4),
                     stringsAsFactors = FALSE), row.names = FALSE)
+}
+
+if (!is.null(COMB$ljung_box) && nrow(COMB$ljung_box)) {
+  # Same rationale as 04_findings.R section 7: a failed Ljung-Box test means
+  # that equation's t-stats above (loadings, alrtest) are not trustworthy,
+  # independent of significance stars.
+  lb <- COMB$ljung_box
+  cat("\nResidual autocorrelation (Ljung-Box, lag = 12), all identified cells\n")
+  print(data.frame(system = lb$system, dummies = lb$dummies, ecdet = lb$ecdet,
+                    lag = lb$lag_rule, K = lb$K, equation = lb$variable,
+                    lb_p = fmt_num(lb$lb_p, 3),
+                    passes_5pct = fmt_yn(lb$lb_p >= 0.05),
+                    stringsAsFactors = FALSE), row.names = FALSE)
+
+  cat("\nLjung-Box failure rate by system and equation\n")
+  lb_sum <- do.call(rbind, lapply(split(lb, list(lb$system, lb$variable), drop = TRUE),
+                                   function(g) {
+    data.frame(system = g$system[1], equation = g$variable[1], n = nrow(g),
+               fails_5pct = sum(!is.na(g$lb_p) & g$lb_p < 0.05),
+               stringsAsFactors = FALSE)
+  }))
+  lb_sum <- lb_sum[order(lb_sum$system, lb_sum$equation), ]
+  print(lb_sum, row.names = FALSE)
 }
 
 cat("\nCaveats\n")

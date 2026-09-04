@@ -95,8 +95,23 @@ fit_vecm_n <- function(jo, r, var_names) {
                p_value = unname(t@pval[1]), stringsAsFactors = FALSE)
   }))
 
+  # Residual diagnostic per equation (same rationale as the bivariate grid --
+  # R/grid.R's fit_vecm()): a fitted equation's t-stats/p-values are only
+  # trustworthy if its residuals are clean of leftover autocorrelation.
+  resid_mat <- residuals(fit$rlm)
+  lb_long <- do.call(rbind, lapply(var_names, function(v) {
+    col <- paste0(v, ".d")
+    if (!col %in% colnames(resid_mat)) {
+      return(data.frame(variable = v, lb_stat = NA_real_, lb_p = NA_real_, lb_lag = NA_integer_,
+                         stringsAsFactors = FALSE))
+    }
+    lb <- ljung_box(resid_mat[, col])
+    data.frame(variable = v, lb_stat = lb$stat, lb_p = lb$p, lb_lag = lb$lag,
+               stringsAsFactors = FALSE)
+  }))
+
   list(ok = TRUE, r = r, status = sprintf("estimated at r = %d", r),
-       loadings = loadings, beta = beta_long, weak_exo = we_long)
+       loadings = loadings, beta = beta_long, weak_exo = we_long, ljung_box = lb_long)
 }
 
 run_combined_grid <- function(panel,
@@ -106,7 +121,8 @@ run_combined_grid <- function(panel,
                               lag_rules = CFG$lag_rules,
                               verbose = TRUE) {
 
-  cells <- list(); loadings <- list(); betas <- list(); weak_exo <- list(); lags <- list()
+  cells <- list(); loadings <- list(); betas <- list(); weak_exo <- list()
+  ljung_boxes <- list(); lags <- list()
 
   for (sysdef in systems) {
     d <- run_sample(panel, sysdef, modes = sysdef$vars)
@@ -181,6 +197,7 @@ run_combined_grid <- function(panel,
             loadings[[length(loadings) + 1]] <- cbind(meta, fit$loadings)
             betas[[length(betas) + 1]] <- cbind(meta, fit$beta)
             weak_exo[[length(weak_exo) + 1]] <- cbind(meta, fit$weak_exo)
+            ljung_boxes[[length(ljung_boxes) + 1]] <- cbind(meta, fit$ljung_box)
           }
         }
       }
@@ -188,6 +205,7 @@ run_combined_grid <- function(panel,
   }
 
   list(cells = do.call(rbind, cells),
+       ljung_box = do.call(rbind, ljung_boxes),
        loadings = do.call(rbind, loadings),
        beta = do.call(rbind, betas),
        weak_exo = do.call(rbind, weak_exo),

@@ -79,8 +79,14 @@ print(data.frame(
   alpha_IC = fmt_star(hd$alpha_IC, hd$p_IC),
   beta_ic = fmt_num(hd$beta_ic, 3),
   half_life = fmt_num(hd$hl_mode, 1),
+  LB_mode = fmt_yn(hd$lb_mode_p >= 0.05),
+  LB_IC = fmt_yn(hd$lb_IC_p >= 0.05),
   status = hd$vecm_status, stringsAsFactors = FALSE), row.names = FALSE)
 write_out(hd, "04_findings", "headline_primary.csv")
+cat("(LB_mode / LB_IC = 'yes' if that equation's residuals pass Ljung-Box at",
+    "5% -- i.e. the t-stats above can be trusted. 'no' means they can't,",
+    "regardless of how significant they look; see the diagnostics section",
+    "below.)\n")
 
 # beta_ic is the long-run elasticity of the mode w.r.t. IC, normalized so
 # the mode's own coefficient is 1: mode_l = -beta_ic * IC_l (- beta_det *
@@ -206,7 +212,56 @@ if (all(!lags$HQ_matches_AIC & !lags$HQ_matches_SBC) &&
       "at a lag order distinct from either rule used in the grid.\n")
 }
 
-# --- 7. caveats that must travel with these numbers ------------------------
+# --- 7. residual diagnostics (Ljung-Box) ------------------------------------
+# H0: an equation's residuals are white noise; rejecting it (p < 0.05) means
+# that equation's t-stats/p-values above are not trustworthy, independent of
+# how significant they look.
+cat("\nResidual autocorrelation (Ljung-Box, lag = 12): does each equation",
+    "pass? -- across the WHOLE grid, all runs\n")
+lb_all <- cells[!is.na(cells$rank_used), ]
+lb_overall <- data.frame(
+  equation = c("mode", "IC"),
+  n = c(sum(!is.na(lb_all$lb_mode_p)), sum(!is.na(lb_all$lb_IC_p))),
+  fails_5pct = c(sum(!is.na(lb_all$lb_mode_p) & lb_all$lb_mode_p < 0.05),
+                 sum(!is.na(lb_all$lb_IC_p) & lb_all$lb_IC_p < 0.05)),
+  stringsAsFactors = FALSE)
+lb_overall$fail_share <- round(lb_overall$fails_5pct / lb_overall$n, 3)
+print(lb_overall, row.names = FALSE)
+
+cat("\nSame check, by mode, primary system only (identified cells)\n")
+lb_by_mode <- do.call(rbind, lapply(names(CFG$modes), function(m) {
+  s <- prim[prim$Model == m & !is.na(prim$rank_used), ]
+  data.frame(Model = m, identified = nrow(s),
+             mode_fails = sum(!is.na(s$lb_mode_p) & s$lb_mode_p < 0.05),
+             IC_fails = sum(!is.na(s$lb_IC_p) & s$lb_IC_p < 0.05),
+             stringsAsFactors = FALSE)
+}))
+print(lb_by_mode, row.names = FALSE)
+write_out(lb_by_mode, "04_findings", "ljung_box_by_mode.csv")
+
+# Headline cells specifically -- these are the ones that would go in front of
+# advisors, so call out by name any that fail rather than leaving it to be
+# read off the table above.
+hd_fail_mode <- hd[!is.na(hd$lb_mode_p) & hd$lb_mode_p < 0.05, ]
+hd_fail_IC <- hd[!is.na(hd$lb_IC_p) & hd$lb_IC_p < 0.05, ]
+if (nrow(hd_fail_mode)) {
+  cat("\nHeadline cells failing Ljung-Box on the MODE equation (t-stats on",
+      "alpha_mode above are not trustworthy for these):\n")
+  print(data.frame(Model = hd_fail_mode$Model, ecdet = hd_fail_mode$ecdet,
+                    lag = hd_fail_mode$lag_rule,
+                    lb_mode_p = fmt_num(hd_fail_mode$lb_mode_p, 3),
+                    stringsAsFactors = FALSE), row.names = FALSE)
+}
+if (nrow(hd_fail_IC)) {
+  cat("\nHeadline cells failing Ljung-Box on the IC equation (t-stats on",
+      "alpha_IC above are not trustworthy for these):\n")
+  print(data.frame(Model = hd_fail_IC$Model, ecdet = hd_fail_IC$ecdet,
+                    lag = hd_fail_IC$lag_rule,
+                    lb_IC_p = fmt_num(hd_fail_IC$lb_IC_p, 3),
+                    stringsAsFactors = FALSE), row.names = FALSE)
+}
+
+# --- 8. caveats that must travel with these numbers ------------------------
 cat("\nCaveats\n")
 cat("  * Johansen critical values are not adjusted for dumvar. Rows with\n")
 cat("    cv_valid = FALSE (", sum(!cells$cv_valid), " of ", nrow(cells),
@@ -214,3 +269,6 @@ cat("    cv_valid = FALSE (", sum(!cells$cv_valid), " of ", nrow(cells),
 cat("  * A bivariate system admits r = 1 only, so r = 0 and r = 2 cells are\n")
 cat("    reported unestimated rather than forced.\n")
 cat("  * Half-lives are defined only for -1 < alpha < 0.\n")
+cat("  * Significance stars do not imply trustworthy inference on their own --\n")
+cat("    check LB_mode/LB_IC (section 7) before treating a starred alpha as\n")
+cat("    reliable.\n")

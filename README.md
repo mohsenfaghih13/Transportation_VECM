@@ -141,6 +141,19 @@ suggests on its own.
 - `Total_Inventories` is the weak case among the primary variables. KPSS does
   not corroborate ADF on the level, so the I(1) reading is a working
   assumption rather than a confirmed one.
+- Every fitted equation is checked for leftover residual autocorrelation
+  (Ljung-Box, lag 12, `lb_mode_stat`/`lb_mode_p`/`lb_IC_stat`/`lb_IC_p` in
+  `cells.csv`; `ljung_box.csv` for the combined systems). A failed test
+  (p < 0.05) means that equation's t-stats/p-values are not trustworthy,
+  regardless of significance stars -- across the whole grid this fails on
+  28% of mode equations and 34% of IC equations. **Local trucking is the
+  case to flag explicitly**: all 12 of its identified primary-system cells
+  fail on the mode side, including both of its two headline specifications.
+  This is the same diagnostic, on the same mode, that the pre-rewrite
+  2026-08-26 report flagged and then overrode ("too significant to
+  ignore") -- an override Waller rejected. It resurfaced here rather than
+  being newly introduced; the check itself was dropped during this
+  session's rebuild and has now been restored.
 
 ## Headline result
 
@@ -154,6 +167,14 @@ showing significant negative mode-side adjustment:
 | Truckload | 11 | 5 | 0.45 |
 | Airfreight (scheduled) | 5 | 2 | 0.40 |
 | LTL | 13 | 2 | 0.15 |
+
+**Local trucking's row above should not be read at face value.** Every one of
+its identified primary-system specifications -- the 4 counted "significant"
+here included -- fails the Ljung-Box residual test on the mode side (see
+Caveats). That means the t-statistics behind this row are not trustworthy,
+the same conclusion Waller reached about this same mode in the 2026-08-26
+report. Treat Local's mode-side result as unresolved, not as the strongest
+row in this table.
 
 No mode's mode-side adjustment is anywhere near unanimous the way airfreight's
 was on the pre-backfill 187-month sample. At the same time, the inventory side
