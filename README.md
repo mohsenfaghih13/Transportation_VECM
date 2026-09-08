@@ -34,7 +34,7 @@ R/                    library code, sourced by run_all.R
   grid.R              the pairwise (mode vs IC) specification grid engine
   grid_combined.R     the 3-variable combined-system grid engine
 analysis/             stages, thin callers of the engine
-  01_data_audit.R     coverage and what each window really buys
+  01_data_audit.R     coverage, what each window really buys, descriptive stats
   02_integration.R    univariate integration testing
   03_grid.R           the full pairwise specification grid
   04_findings.R       what survives; pure reporting, estimates nothing
@@ -128,6 +128,12 @@ LTL is significant but positive (the wrong sign for error-correction), and
 the rest aren't significant at all, a messier result than the summary above
 suggests on its own.
 
+**Descriptive statistics match Maysami & Koh's Table 2.** `01_data_audit.R`
+reports mean, std dev, min and max for each of the four modes plus Census
+MTIS IC, in both log level and log first-difference form, over the primary
+system's common window (`outputs/01_data_audit/descriptive_statistics.csv`)
+-- the reporting template Sparsh pointed to on 2026-08-19.
+
 ## Caveats carried in the output
 
 - `urca`'s Johansen critical values are not adjusted for `dumvar`. Every cell
@@ -141,6 +147,12 @@ suggests on its own.
 - `Total_Inventories` is the weak case among the primary variables. KPSS does
   not corroborate ADF on the level, so the I(1) reading is a working
   assumption rather than a confirmed one.
+- Every alpha carries a 95% confidence interval (`alpha_mode_lo/hi`,
+  `alpha_IC_lo/hi` in `cells.csv`, from a t-distribution, not a normal
+  approximation) and a half-life computed from the point estimate. Per
+  Waller's request (2026-08-26), read the half-life as descriptive only, not
+  as a precise number comparable across models -- especially where the CI
+  crosses zero.
 - Every fitted equation is checked for leftover residual autocorrelation
   (Ljung-Box, lag 12, `lb_mode_stat`/`lb_mode_p`/`lb_IC_stat`/`lb_IC_p` in
   `cells.csv`; `ljung_box.csv` for the combined systems). A failed test
