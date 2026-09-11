@@ -5,8 +5,8 @@
 # Compares outputs/03_grid/cells.csv against frozen fixtures in tests/fixtures/.
 #
 #   phase1  = run A, dummies "none"                 (24 cells)
-#   phase2  = all runs, dummies "none" and "shocks" (216 cells; "shocks"->"orig")
-#   phase4  = all runs, every design each run has    (528 cells)
+#   phase2  = all runs, dummies "none" and "shocks" (240 cells; "shocks"->"orig")
+#   phase4  = all runs, every design each run has    (576 cells)
 #
 # Any mismatch beyond floating-point tolerance is a regression.
 #
@@ -14,21 +14,30 @@
 #
 # History: fixtures were originally captured from the pre-consolidation phase
 # scripts, to verify the refactor into one grid engine moved zero numbers.
-# That check passed and is retired. On 2026-09-02, Total_Inventories was
-# backfilled from 2009-06 to 2003-12 (Sparsh confirmed Census MTIS actually
-# goes back to 1996 -- the 2009-06 start was a data-collection gap, not a
-# source limit), which legitimately changes every downstream number. Fixtures
-# were re-baselined from the post-backfill output on 2026-09-02. Later the
-# same day: run D (deflated by PPI_All_Commodities) and run E (pre-pandemic
-# subsample, 2003-2019) were added to CFG$runs; then run E was given its own
-# reduced dummy_sets (none, crisis_only) instead of the global 5, since its
-# pandemic-dummy designs all reference dates after the window ends and would
-# silently collapse to "crisis only" anyway (R/dummies.R). Each change grew
-# or shrank phase2/phase4's cell counts (144->192->240->216,
-# 360->480->600->528); fixtures were re-baselined each time. From here on
-# this check protects against accidental changes to the *current, correct*
-# numbers, not against a comparison to the old truncated sample or an
-# earlier run/design set.
+# That check passed and is retired. Total_Inventories was later backfilled
+# from 2009-06 to 2003-12 (Census MTIS itself goes back to 1996 -- the
+# 2009-06 start was a data-collection gap, not a source limit), which
+# legitimately changes every downstream number. Fixtures were re-baselined
+# from the post-backfill output. Later the same day: run D (deflated by
+# PPI_All_Commodities) and run E (pre-pandemic subsample, 2003-2019) were
+# added to CFG$runs; then run E was given its own reduced dummy_sets (none,
+# crisis_only) instead of the global 5, since its pandemic-dummy designs all
+# reference dates after the window ends and would silently collapse to
+# "crisis only" anyway (R/dummies.R). Each change grew or shrank
+# phase2/phase4's cell counts (144->192->240->216, 360->480->600->528);
+# fixtures were re-baselined each time. From here on this check protects
+# against accidental changes to the *current, correct* numbers, not against
+# a comparison to the old truncated sample or an earlier run/design set.
+#
+# Total_Inventories was later found to be the seasonally-adjusted Census
+# series, not NSA as intended -- mismatched against the NSA transportation-
+# cost series it's paired with in every model. Corrected to the true NSA
+# figures and fixtures re-baselined again; row counts unchanged (24/216/528),
+# only the values themselves moved.
+#
+# Run F (narrower 2009-2019 pre-pandemic subsample, same reduced dummy_sets
+# as run E) was added afterward; phase2/phase4 grew again (216->240,
+# 528->576) and fixtures were re-baselined accordingly.
 # =============================================================================
 
 TOL <- 1e-8

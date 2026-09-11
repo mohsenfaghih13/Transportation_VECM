@@ -76,8 +76,8 @@ I(1).
 of the workbook had `Total_Inventories` starting 2009-06 against the modes'
 2003-12, capping the primary systems at 187 months regardless of requested
 start date. That gap was a data-collection limit, not a limit of the Census
-MTIS source itself -- MTIS actually goes back to 1996 (per Sparsh, 2026-09-02;
-see https://www.census.gov/mtis/historic_releases.html). `Total_Inventories`
+MTIS source itself -- MTIS actually goes back to 1996 (see
+https://www.census.gov/mtis/historic_releases.html). `Total_Inventories`
 has since been backfilled to 2003-12, matching the modes, so the primary
 systems now run the full 253-month window.
 
@@ -94,11 +94,10 @@ becomes an all-zero column and produces an exactly singular system. Such
 columns, and exact duplicates, are dropped and reported.
 
 **Run D deflates by an overall PPI, not the transportation-specific one.**
-Waller's concern (2026-08-26): a nominal inventory stock and a nominal price
-index can look cointegrated purely because both carry the same general
-inflation trend. Run D divides both the mode and Census MTIS IC by
-`PPI_All_Commodities` (BLS `WPU00000000`, confirmed by Sparsh and Waller,
-2026-09-02) before logging, to strip that shared trend out. The result is not
+A nominal inventory stock and a nominal price index can look cointegrated
+purely because both carry the same general inflation trend. Run D divides
+both the mode and Census MTIS IC by `PPI_All_Commodities` (BLS
+`WPU00000000`) before logging, to strip that shared trend out. The result is not
 a footnote: under deflation, **airfreight shows `r = 0` (no cointegration) in
 every one of its 30 identified-or-not cells** -- its nominal-data
 cointegration with IC does not survive removing general inflation. LTL,
@@ -131,8 +130,8 @@ suggests on its own.
 **Descriptive statistics match Maysami & Koh's Table 2.** `01_data_audit.R`
 reports mean, std dev, min and max for each of the four modes plus Census
 MTIS IC, in both log level and log first-difference form, over the primary
-system's common window (`outputs/01_data_audit/descriptive_statistics.csv`)
--- the reporting template Sparsh pointed to on 2026-08-19.
+system's common window (`outputs/01_data_audit/descriptive_statistics.csv`),
+following the Maysami & Koh (2000) reporting template.
 
 ## Caveats carried in the output
 
@@ -149,10 +148,9 @@ system's common window (`outputs/01_data_audit/descriptive_statistics.csv`)
   assumption rather than a confirmed one.
 - Every alpha carries a 95% confidence interval (`alpha_mode_lo/hi`,
   `alpha_IC_lo/hi` in `cells.csv`, from a t-distribution, not a normal
-  approximation) and a half-life computed from the point estimate. Per
-  Waller's request (2026-08-26), read the half-life as descriptive only, not
-  as a precise number comparable across models -- especially where the CI
-  crosses zero.
+  approximation) and a half-life computed from the point estimate. Read the
+  half-life as descriptive only, not as a precise number comparable across
+  models -- especially where the CI crosses zero.
 - Every fitted equation is checked for leftover residual autocorrelation
   (Ljung-Box, lag 12, `lb_mode_stat`/`lb_mode_p`/`lb_IC_stat`/`lb_IC_p` in
   `cells.csv`; `ljung_box.csv` for the combined systems). A failed test
@@ -161,11 +159,12 @@ system's common window (`outputs/01_data_audit/descriptive_statistics.csv`)
   28% of mode equations and 34% of IC equations. **Local trucking is the
   case to flag explicitly**: all 12 of its identified primary-system cells
   fail on the mode side, including both of its two headline specifications.
-  This is the same diagnostic, on the same mode, that the pre-rewrite
-  2026-08-26 report flagged and then overrode ("too significant to
-  ignore") -- an override Waller rejected. It resurfaced here rather than
-  being newly introduced; the check itself was dropped during this
-  session's rebuild and has now been restored.
+  This is the same diagnostic, on the same mode, that an earlier version of
+  this project flagged and then overrode ("too significant to ignore") --
+  an override that doesn't hold up, since failed residual diagnostics mean
+  the t-statistics aren't trustworthy regardless of significance. It
+  resurfaced here rather than being newly introduced; the check itself was
+  dropped during a later rebuild and has now been restored.
 
 ## Headline result
 
@@ -184,9 +183,9 @@ showing significant negative mode-side adjustment:
 its identified primary-system specifications -- the 4 counted "significant"
 here included -- fails the Ljung-Box residual test on the mode side (see
 Caveats). That means the t-statistics behind this row are not trustworthy,
-the same conclusion Waller reached about this same mode in the 2026-08-26
-report. Treat Local's mode-side result as unresolved, not as the strongest
-row in this table.
+the same conclusion reached about this same mode in an earlier report on
+this project. Treat Local's mode-side result as unresolved, not as the
+strongest row in this table.
 
 No mode's mode-side adjustment is anywhere near unanimous the way airfreight's
 was on the pre-backfill 187-month sample. At the same time, the inventory side
