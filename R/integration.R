@@ -18,14 +18,14 @@ adf_test <- function(x, type) {
     return(list(stat = NA_real_, cv5 = NA_real_, lags = NA_integer_, reject = NA))
   }
   st <- unname(o@teststat[1, stat_name])
-  cv <- unname(o@cval[stat_name, "5pct"])
+  cv <- unname(o@cval[stat_name, CFG$uni_cv_level])
   list(stat = st, cv5 = cv, lags = adf_lags_used(o), reject = st < cv)
 }
 
 kpss_test <- function(x, type) {
   o <- tryCatch(urca::ur.kpss(x, type = type, lags = CFG$kpss_lags), error = function(e) e)
   if (inherits(o, "error")) return(list(stat = NA_real_, cv5 = NA_real_, reject = NA))
-  st <- unname(o@teststat[1]); cv <- unname(o@cval[1, "5pct"])
+  st <- unname(o@teststat[1]); cv <- unname(o@cval[1, CFG$uni_cv_level])
   # H0 is stationarity, so rejection means NON-stationary
   list(stat = st, cv5 = cv, reject = st > cv)
 }
@@ -36,12 +36,15 @@ za_test <- function(x, dates, lag) {
     return(list(stat = NA_real_, cv5 = NA_real_, brk = NA_character_, reject = NA))
   }
   bp <- o@bpoint
+  # ur.za returns an UNNAMED vector ordered 1%, 5%, 10% -- this local ordering
+  # is specific to ur.za's own return value and is not CFG$cv_levels (which
+  # is ordered 10%/5%/1% and used elsewhere for the Johansen critical values).
+  cv_idx <- match(CFG$uni_cv_level, c("1pct", "5pct", "10pct"))
   list(stat = unname(o@teststat),
-       # ur.za returns an UNNAMED vector ordered 1%, 5%, 10%
-       cv5 = unname(o@cval[2]),
+       cv5 = unname(o@cval[cv_idx]),
        brk = if (is.na(bp) || bp < 1 || bp > length(dates)) NA_character_
              else format(dates[bp], "%Y-%m"),
-       reject = unname(o@teststat) < unname(o@cval[2]))
+       reject = unname(o@teststat) < unname(o@cval[cv_idx]))
 }
 
 # ur.df has no seasonal option but the VECMs carry season = 12, so the ADF is

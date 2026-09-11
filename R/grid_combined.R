@@ -105,7 +105,7 @@ fit_vecm_n <- function(jo, r, var_names) {
       return(data.frame(variable = v, lb_stat = NA_real_, lb_p = NA_real_, lb_lag = NA_integer_,
                          stringsAsFactors = FALSE))
     }
-    lb <- ljung_box(resid_mat[, col])
+    lb <- ljung_box(resid_mat[, col], lag = CFG$season)
     data.frame(variable = v, lb_stat = lb$stat, lb_p = lb$p, lb_lag = lb$lag,
                stringsAsFactors = FALSE)
   }))

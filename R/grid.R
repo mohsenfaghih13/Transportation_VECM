@@ -61,15 +61,15 @@ eq_table <- function(rlm_fit, response) {
   out
 }
 
-# 95% CI on one coefficient, from its point estimate/SE and the equation's
-# residual degrees of freedom (not a normal approximation).
+# CI on one coefficient at CFG$ci_level, from its point estimate/SE and the
+# equation's residual degrees of freedom (not a normal approximation).
 ci95 <- function(eq, nm) {
   est <- grab(eq, nm, "estimate"); se <- grab(eq, nm, "se")
   df <- attr(eq, "resid_df")
   if (is.na(est) || is.na(se) || is.null(df) || is.na(df)) {
     return(c(lo = NA_real_, hi = NA_real_))
   }
-  half <- stats::qt(0.975, df = df) * se
+  half <- stats::qt(0.5 + CFG$ci_level / 2, df = df) * se
   c(lo = est - half, hi = est + half)
 }
 
@@ -128,8 +128,8 @@ fit_vecm <- function(jo, r, mode_col, ic_col) {
   # Residual diagnostic: a fitted equation's t-stats/p-values are only
   # trustworthy if its residuals are clean of leftover autocorrelation.
   resid_mat <- residuals(fit$rlm)
-  lb_mode <- ljung_box(resid_mat[, paste0(mode_col, ".d")])
-  lb_IC   <- ljung_box(resid_mat[, paste0(ic_col, ".d")])
+  lb_mode <- ljung_box(resid_mat[, paste0(mode_col, ".d")], lag = CFG$season)
+  lb_IC   <- ljung_box(resid_mat[, paste0(ic_col, ".d")], lag = CFG$season)
 
   list(ok = TRUE, r = r, status = sprintf("estimated at r = %d", r),
        alpha_mode = grab(eq_m, "ect1", "estimate"),

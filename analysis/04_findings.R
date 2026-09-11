@@ -79,8 +79,8 @@ print(data.frame(
   alpha_IC = fmt_star(hd$alpha_IC, hd$p_IC),
   beta_ic = fmt_num(hd$beta_ic, 3),
   half_life = fmt_num(hd$hl_mode, 1),
-  LB_mode = fmt_yn(hd$lb_mode_p >= 0.05),
-  LB_IC = fmt_yn(hd$lb_IC_p >= 0.05),
+  LB_mode = fmt_yn(hd$lb_mode_p >= CFG$lb_alpha),
+  LB_IC = fmt_yn(hd$lb_IC_p >= CFG$lb_alpha),
   status = hd$vecm_status, stringsAsFactors = FALSE), row.names = FALSE)
 write_out(hd, "04_findings", "headline_primary.csv")
 cat("(LB_mode / LB_IC = 'yes' if that equation's residuals pass Ljung-Box at",
@@ -175,14 +175,14 @@ if (nrow(sh)) {
     data.frame(run = g$run[1], design = g$dummies[1], n = nrow(g),
                median_coef = round(median(g$shock_coef, na.rm = TRUE), 5),
                median_p = round(median(g$shock_p, na.rm = TRUE), 4),
-               sig_5pct = sum(g$shock_p < 0.05), stringsAsFactors = FALSE)
+               sig_5pct = sum(g$shock_p < CFG$shock_alpha), stringsAsFactors = FALSE)
   }))
   shs <- shs[order(shs$run, match(shs$design, union(CFG$dummy_sets, unique(cells$dummies)))), ]
   print(shs, row.names = FALSE)
   write_out(shs, "04_findings", "shock_coefficients.csv")
 }
 
-crisis_hits <- sum(!is.na(cells$crisis_p) & cells$crisis_p < 0.05)
+crisis_hits <- sum(!is.na(cells$crisis_p) & cells$crisis_p < CFG$shock_alpha)
 cat("\nCrisis dummy significant at 5% in", crisis_hits, "of",
     sum(!is.na(cells$crisis_p)), "cells where it is identified.\n")
 
@@ -213,17 +213,17 @@ if (all(!lags$HQ_matches_AIC & !lags$HQ_matches_SBC) &&
 }
 
 # --- 7. residual diagnostics (Ljung-Box) ------------------------------------
-# H0: an equation's residuals are white noise; rejecting it (p < 0.05) means
-# that equation's t-stats/p-values above are not trustworthy, independent of
-# how significant they look.
+# H0: an equation's residuals are white noise; rejecting it (p < CFG$lb_alpha)
+# means that equation's t-stats/p-values above are not trustworthy,
+# independent of how significant they look.
 cat("\nResidual autocorrelation (Ljung-Box, lag = 12): does each equation",
     "pass? -- across the WHOLE grid, all runs\n")
 lb_all <- cells[!is.na(cells$rank_used), ]
 lb_overall <- data.frame(
   equation = c("mode", "IC"),
   n = c(sum(!is.na(lb_all$lb_mode_p)), sum(!is.na(lb_all$lb_IC_p))),
-  fails_5pct = c(sum(!is.na(lb_all$lb_mode_p) & lb_all$lb_mode_p < 0.05),
-                 sum(!is.na(lb_all$lb_IC_p) & lb_all$lb_IC_p < 0.05)),
+  fails_5pct = c(sum(!is.na(lb_all$lb_mode_p) & lb_all$lb_mode_p < CFG$lb_alpha),
+                 sum(!is.na(lb_all$lb_IC_p) & lb_all$lb_IC_p < CFG$lb_alpha)),
   stringsAsFactors = FALSE)
 lb_overall$fail_share <- round(lb_overall$fails_5pct / lb_overall$n, 3)
 print(lb_overall, row.names = FALSE)
@@ -232,8 +232,8 @@ cat("\nSame check, by mode, primary system only (identified cells)\n")
 lb_by_mode <- do.call(rbind, lapply(names(CFG$modes), function(m) {
   s <- prim[prim$Model == m & !is.na(prim$rank_used), ]
   data.frame(Model = m, identified = nrow(s),
-             mode_fails = sum(!is.na(s$lb_mode_p) & s$lb_mode_p < 0.05),
-             IC_fails = sum(!is.na(s$lb_IC_p) & s$lb_IC_p < 0.05),
+             mode_fails = sum(!is.na(s$lb_mode_p) & s$lb_mode_p < CFG$lb_alpha),
+             IC_fails = sum(!is.na(s$lb_IC_p) & s$lb_IC_p < CFG$lb_alpha),
              stringsAsFactors = FALSE)
 }))
 print(lb_by_mode, row.names = FALSE)
@@ -242,8 +242,8 @@ write_out(lb_by_mode, "04_findings", "ljung_box_by_mode.csv")
 # Headline cells specifically -- these are the ones that would go in front of
 # advisors, so call out by name any that fail rather than leaving it to be
 # read off the table above.
-hd_fail_mode <- hd[!is.na(hd$lb_mode_p) & hd$lb_mode_p < 0.05, ]
-hd_fail_IC <- hd[!is.na(hd$lb_IC_p) & hd$lb_IC_p < 0.05, ]
+hd_fail_mode <- hd[!is.na(hd$lb_mode_p) & hd$lb_mode_p < CFG$lb_alpha, ]
+hd_fail_IC <- hd[!is.na(hd$lb_IC_p) & hd$lb_IC_p < CFG$lb_alpha, ]
 if (nrow(hd_fail_mode)) {
   cat("\nHeadline cells failing Ljung-Box on the MODE equation (t-stats on",
       "alpha_mode above are not trustworthy for these):\n")

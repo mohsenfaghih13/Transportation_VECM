@@ -52,6 +52,10 @@ CFG$deflator_series <- "PPI_All_Commodities"
 #      this window and would silently collapse to "crisis only" anyway (see
 #      R/dummies.R), so run E is given crisis_only explicitly instead of
 #      running four designs that turn out to be identical.
+#   F  narrower 2009-2019 window, same IC measure -> a second, tighter
+#      pre-pandemic check requested alongside E. Same reasoning as E applies
+#      to its dummy_sets (all pandemic-dated designs fall outside this
+#      window too), so it gets the same reduced set.
 CFG$runs <- list(
   list(tag = "A_common_censusIC",   start = "2003-01-01", ic = "Total_Inventories",
        label = "Census MTIS IC, common window", primary = TRUE),
@@ -64,6 +68,9 @@ CFG$runs <- list(
        primary = FALSE, deflate = TRUE),
   list(tag = "E_prepandemic_censusIC", start = "2003-01-01", end = "2019-12-31",
        ic = "Total_Inventories", label = "Pre-pandemic subsample (2003-2019), Census MTIS IC",
+       primary = FALSE, dummy_sets = c("none", "crisis_only")),
+  list(tag = "F_prepandemic_2009_censusIC", start = "2009-01-01", end = "2019-12-31",
+       ic = "Total_Inventories", label = "Narrower pre-pandemic subsample (2009-2019), Census MTIS IC",
        primary = FALSE, dummy_sets = c("none", "crisis_only"))
 )
 
@@ -124,6 +131,12 @@ CFG$kpss_lags    <- "long"
 CFG$za_model     <- "both"
 CFG$za_lag       <- 4L
 CFG$min_obs      <- 40L
+CFG$uni_cv_level <- "5pct"  # critical-value level for ADF/KPSS/ZA order-of-
+                            # integration tests (distinct from CFG$rank_level,
+                            # which governs the Johansen rank read-off)
 
 # --- reporting -------------------------------------------------------------
-CFG$alpha_sig  <- 0.10   # threshold for "significantly error-correcting"
+CFG$ci_level    <- 0.95  # confidence level for alpha's reported interval
+CFG$alpha_sig   <- 0.10  # threshold for "significantly error-correcting"
+CFG$shock_alpha <- 0.05  # significance threshold for shock/crisis dummy coefficients (kept separate from CFG$alpha_sig above)
+CFG$lb_alpha    <- 0.05  # Ljung-Box p-value threshold: below this, an equation's residuals show leftover autocorrelation and its t-stats/p-values are not trustworthy

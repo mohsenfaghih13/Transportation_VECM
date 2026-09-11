@@ -40,8 +40,8 @@ agg <- aggregate(
   cbind(identified = !is.na(GRID$cells$rank_used),
         mode_sig = !is.na(GRID$cells$p_mode) & GRID$cells$p_mode < CFG$alpha_sig,
         IC_sig = !is.na(GRID$cells$p_IC) & GRID$cells$p_IC < CFG$alpha_sig,
-        shock_sig = !is.na(GRID$cells$shock_p) & GRID$cells$shock_p < 0.05,
-        crisis_sig = !is.na(GRID$cells$crisis_p) & GRID$cells$crisis_p < 0.05) ~
+        shock_sig = !is.na(GRID$cells$shock_p) & GRID$cells$shock_p < CFG$shock_alpha,
+        crisis_sig = !is.na(GRID$cells$crisis_p) & GRID$cells$crisis_p < CFG$shock_alpha) ~
     run + dummies,
   data = GRID$cells, FUN = sum)
 dummy_order <- union(CFG$dummy_sets, unique(GRID$cells$dummies))

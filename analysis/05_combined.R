@@ -121,14 +121,14 @@ if (!is.null(COMB$ljung_box) && nrow(COMB$ljung_box)) {
   print(data.frame(system = lb$system, dummies = lb$dummies, ecdet = lb$ecdet,
                     lag = lb$lag_rule, K = lb$K, equation = lb$variable,
                     lb_p = fmt_num(lb$lb_p, 3),
-                    passes_5pct = fmt_yn(lb$lb_p >= 0.05),
+                    passes_5pct = fmt_yn(lb$lb_p >= CFG$lb_alpha),
                     stringsAsFactors = FALSE), row.names = FALSE)
 
   cat("\nLjung-Box failure rate by system and equation\n")
   lb_sum <- do.call(rbind, lapply(split(lb, list(lb$system, lb$variable), drop = TRUE),
                                    function(g) {
     data.frame(system = g$system[1], equation = g$variable[1], n = nrow(g),
-               fails_5pct = sum(!is.na(g$lb_p) & g$lb_p < 0.05),
+               fails_5pct = sum(!is.na(g$lb_p) & g$lb_p < CFG$lb_alpha),
                stringsAsFactors = FALSE)
   }))
   lb_sum <- lb_sum[order(lb_sum$system, lb_sum$equation), ]
