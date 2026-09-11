@@ -6,7 +6,7 @@
 "PPI_All_Commodities",253,"I(1)",253,"I(1)",FALSE
 "Rail_Transportation",253,"I(1)",253,"I(1)",FALSE
 "TC_Aggregate_WPU30",187,"I(1)",187,"I(1)",FALSE
-"Total_Inventories",253,"I(1) (level tests disagree)",253,"I(1) (level tests disagree)",FALSE
+"Total_Inventories",253,"I(0)",253,"I(0)",FALSE
 "Trucking_LD_LTL",253,"I(1)",253,"I(1)",FALSE
 "Trucking_LD_Truckload",253,"I(1)",253,"I(1)",FALSE
 "Trucking_Local",253,"I(1)",253,"I(1)",FALSE

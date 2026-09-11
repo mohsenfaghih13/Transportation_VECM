@@ -1,5 +1,5 @@
 "Model","identified","mode_rejects_exogeneity","IC_rejects_exogeneity","both","neither"
-"LTL",17,7,16,6,0
-"Truckload",17,9,15,7,0
-"Local",12,9,11,8,0
-"Airfreight",5,2,4,2,1
+"LTL",17,6,15,4,0
+"Truckload",17,11,12,6,0
+"Local",10,7,8,5,0
+"Airfreight",5,1,5,1,0
