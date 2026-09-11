@@ -1,0 +1,147 @@
+Table 1. ESTIMATED MONTHLY SALES AND INVENTORIES FOR MANUFACTURERS, RETAILERS, AND MERCHANT WHOLESALERS  DATA MONTH 01 2005                                                                               
+
+                                   -------------SALES-------------  ----------INVENTORIES----------     INVENTORIES/SALES RATIOS
+                                   Jan. 2005  Dec. 2004  Jan. 2004  Jan. 2005  Dec. 2004  Jan. 2004  Jan. 2005  Dec. 2004  Jan. 2004
+                                      (p)        (r)        (s)        (p)        (r)        (s)
+   ADJUSTED
+    TOTAL BUSINESS                   994,473    986,724    895,413  1,290,576  1,279,194  1,188,082       1.30       1.30       1.33
+    MANUFACTURERS                    389,415    383,872    348,477    477,466    471,351    440,029       1.23       1.23       1.26
+    RETAILERS                        316,301    315,514    292,620    481,175    479,411    452,395       1.52       1.52       1.55
+    MERCHANT WHOLESALERS             288,757    287,338    254,316    331,935    328,432    295,658       1.15       1.14       1.16
+   NOT ADJUSTED
+    TOTAL BUSINESS                   895,184  1,044,600    822,405  1,283,152  1,264,218  1,181,921       1.43       1.21       1.44
+    MANUFACTURERS                    352,743    381,071    318,434    474,939    459,690    437,679       1.35       1.21       1.37
+    RETAILERS                        279,281    371,848    265,064    471,762    473,630    443,801       1.69       1.27       1.67
+    MERCHANT WHOLESALERS             263,160    291,681    238,907    336,451    330,898    300,441       1.28       1.13       1.26
+
+ 
+(p) preliminary.                                                                 
+(r) revised.                                                                     
+(s) Adjusted data were revised due to concurrent seasonal adjustment. No revisions were made to Not Adjusted data. 
+                                                             
+            
+                                                  
+                                                             
+                                                             
+Table 2. PERCENT CHANGES FOR SALES AND INVENTORIES - MANUFACTURERS, RETAILERS, AND MERCHANT WHOLESALERS  DATA MONTH 01 2005                                                                              
+
+                                                                  ADJUSTED                                                              NOT ADJUSTED
+                                   --------------SALES---------------  -----------INVENTORIES------------  --------------SALES---------------  -----------INVENTORIES------------
+                                   Jan. 2005/  Dec. 2004/  Jan. 2005/  Jan. 2005/  Dec. 2004/  Jan. 2005/  Jan. 2005/  Dec. 2004/  Jan. 2005/  Jan. 2005/  Dec. 2004/  Jan. 2005/
+                                   Dec. 2004   Nov. 2004   Jan. 2004   Dec. 2004   Nov. 2004   Jan. 2004   Dec. 2004   Nov. 2004   Jan. 2004   Dec. 2004   Nov. 2004   Jan. 2004
+
+    TOTAL BUSINESS                        0.8         1.2        11.1         0.9         0.2         8.6       -14.3         8.0         8.8         1.5        -3.4         8.6
+    MANUFACTURERS                         1.4         1.2        11.7         1.3         0.1         8.5        -7.4         2.1        10.8         3.3        -2.6         8.5
+    RETAILERS                             0.2         1.3         8.1         0.4         0.3         6.4       -24.9        19.6         5.4        -0.4        -6.7         6.3
+    MERCHANT WHOLESALERS                  0.5         1.1        13.5         1.1         0.4        12.3        -9.8         2.9        10.2         1.7         0.4        12.0
+ 
+ 
+(p) preliminary.                                                                 
+(r) revised.                                                                     
+(s) Adjusted data were revised due to concurrent seasonal adjustment. No revisions were made to Not Adjusted data. 
+                                                             
+                                                              
+                 
+                                            
+                                                             
+Table 3. ESTIMATED MONTHLY RETAIL SALES, INVENTORIES, AND INVENTORIES/SALES RATIOS, BY KIND OF BUSINESS  DATA MONTH 01 2005                                                                              
+
+                                                                -------------SALES-------------  ----------INVENTORIES----------    PERCENT CHANGE IN INVENTORIES        INVENTORIES/SALES RATIOS
+   KIND OF BUSINESS                                             Jan. 2005  Dec. 2004  Jan. 2004  Jan. 2005  Dec. 2004  Jan. 2004  Jan. 2005/  Dec. 2004/  Jan. 2005/
+                                                                   (p)        (r)        (s)        (p)        (r)        (s)     Dec. 2004   Nov. 2004   Jan. 2004   Jan. 2005  Dec. 2004  Jan. 2004
+   ADJUSTED
+   44,45     RETAIL TRADE, TOTAL                                  316,301    315,514    292,620    481,175    479,411    452,395         0.4         0.3         6.4       1.52       1.52       1.55
+
+   44,45-441 TOTAL EXCL. MOTOR VEHICLE AND PARTS DEALERS          235,857    233,327    217,679    320,725    318,072    298,441         0.8         1.1         7.5       1.36       1.36       1.37
+
+   441       MOTOR VEHICLE AND PARTS DEALERS                       80,444     82,187     74,941    160,450    161,339    153,954        -0.6        -1.4         4.2       1.99       1.96       2.05
+   442,443   FURNITURE,HOME FURN.,ELECTRONICS, APPL.STORES         17,578     17,329     16,791     29,106     29,101     26,997         0.0         2.9         7.8       1.66       1.68       1.61
+   444       BUILDING MATL. & GARDEN EQUIPMENT & SUPPLY STORES     32,163     31,984     27,871     57,283     55,748     47,821         2.8         2.3        19.8       1.78       1.74       1.72
+   445       FOOD AND BEVERAGE STORES                              45,296     44,979     43,246     36,018     35,837     34,787         0.5        -0.4         3.5       0.80       0.80       0.80
+   448       CLOTHING AND ACCESSORY STORES                         16,277     16,001     15,580     38,304     37,815     37,104         1.3         0.5         3.2       2.35       2.36       2.38
+   452       GENERAL MERCHANDISE                                   43,633     43,231     41,074     72,169     71,799     67,679         0.5         1.1         6.6       1.65       1.66       1.65
+   4521      DEPARTMENT STORES (EXCL. LEASED DEPTS.)               18,083     18,026     17,840     37,493     37,444     37,419         0.1         0.3         0.2       2.07       2.08       2.10
+
+   NOT ADJUSTED
+   44,45     RETAIL TRADE, TOTAL                                  279,281    371,848    265,064    471,762    473,630    443,801        -0.4        -6.7         6.3       1.69       1.27       1.67
+
+   44,45-441 TOTAL EXCL. MOTOR VEHICLE AND PARTS DEALERS          211,198    292,694    198,999    309,439    309,625    287,617        -0.1        -9.7         7.6       1.47       1.06       1.45
+
+   441       MOTOR VEHICLE AND PARTS DEALERS                       68,083     79,154     66,065    162,323    164,005    156,184        -1.0        -0.4         3.9       2.38       2.07       2.36
+   442,443   FURNITURE,HOME FURN.,ELECTRONICS, APPL.STORES         15,997     24,441     15,647     28,233     29,014     26,214        -2.7       -10.0         7.7       1.76       1.19       1.68
+   444       BUILDING MATL. & GARDEN EQUIPMENT & SUPPLY STORES     25,189     29,113     22,465     56,137     53,908     46,865         4.1         1.8        19.8       2.23       1.85       2.09
+   445       FOOD AND BEVERAGE STORES                              44,092     49,676     42,902     36,015     36,682     34,802        -1.8        -3.0         3.5       0.82       0.74       0.81
+   448       CLOTHING AND ACCESSORY STORES                         12,029     28,431     11,773     35,355     34,790     34,247         1.6       -16.8         3.2       2.94       1.22       2.91
+   452       GENERAL MERCHANDISE                                   36,747     65,667     34,725     67,075     67,864     62,699        -1.2       -19.2         7.0       1.83       1.03       1.81
+   4521      DEPARTMENT STORES (EXCL. LEASED DEPTS.)               14,078     31,757     13,981     34,306     34,711     34,164        -1.2       -23.4         0.4       2.44       1.09       2.44
+ 
+ 
+(p) preliminary.                                                                 
+(r) revised.                                                                     
+(s) Adjusted data were revised due to concurrent seasonal adjustment. No revisions were made to Not Adjusted data. 
+                                                             
+                                                              
+                                                             
+                                                             
+Table 4. ADJUSTED MTIS DOLLAR AND PERCENT CHANGES  DATA MONTH 01 2005                                                                                                                                    
+
+
+                                          C1             C2         C3         C4             C5         C6
+                                   ----------DOLLAR CHANGES-----------  ----------PERCENT CHANGES----------
+                                   CMCY-PMCY  PMCY-(PM-1)CY  CMCY-CMPY  CMCY/PMCY  PMCY/(PM-1)CY  CMCY/CMPY
+
+   SALES
+    TOTAL BUSINESS                     7,749         11,799     99,060        0.8            1.2       11.1
+    MANUFACTURERS                      5,543        383,872     40,938        1.4            0.0       11.7
+    RETAILERS                            787          3,959     23,681        0.2            1.3        8.1
+    MERCHANT WHOLESALERS               1,419          3,115     34,441        0.5            1.1       13.5
+
+   INVENTORY
+    TOTAL BUSINESS                    11,382          3,065    102,494        0.9            0.2        8.6
+    MANUFACTURERS                      6,115            474     37,437        1.3            0.1        8.5
+    RETAILERS                          1,764          1,240     28,780        0.4            0.3        6.4
+    MERCHANT WHOLESALERS               3,503          1,351     36,277        1.1            0.4       12.3
+ 
+  
+Legend:                                                                          
+ (P)=Preliminary   
+ (F)=Final                                                                       
+ CM=Current Month                                                                
+ PM=Previous Month                                                               
+ CY=Current Year                                                                 
+ PY=Previous Year                                                                
+ CM/PM=Current Month to Previous Month                                           
+ PM/PM-1=Previous Month to Previous Month minus one    
+
+
+                          
+ 
+Table 5. PM REVISIONS PRELIMINARY TO FINAL  DATA MONTH 01 2005                                                                                                                                           
+
+                                          C1           C2           C3         C4           C5           C6
+                                   ------------UNADJUSTED-------------  -------------ADJUSTED--------------
+                                      PM (P)  PM(F)-PM(P)  PM(F)/PM(P)     PM (P)  PM(F)-PM(P)  PM(F)/PM(P)
+                                                $ CHANGE     % CHANGE                $ CHANGE     % CHANGE
+   SALES
+    TOTAL BUSINESS                 1,044,355          245         0.02    986,229          495         0.05
+    MANUFACTURERS                    380,669          402         0.11    382,691        1,181         0.31
+    RETAILERS                        372,135         -287        -0.08    315,078          436         0.14
+    MERCHANT WHOLESALERS             291,436          245         0.08    286,843          495         0.17
+
+   INVENTORY
+    TOTAL BUSINESS                 1,264,298          -80        -0.01  1,279,029          165         0.01
+    MANUFACTURERS                    459,484          206         0.04    470,553          798         0.17
+    RETAILERS                        473,768         -138        -0.03    479,378           33         0.01
+    MERCHANT WHOLESALERS             330,978          -80        -0.02    328,267          165         0.05
+ 
+ 
+Legend:                                                                          
+ (P)=Preliminary   
+ (F)=Final                                                                       
+ CM=Current Month                                                                
+ PM=Previous Month                                                               
+ CY=Current Year                                                                 
+ PY=Previous Year                                                                
+ CM/PM=Current Month to Previous Month                                           
+ PM/PM-1=Previous Month to Previous Month minus one                              
+ 

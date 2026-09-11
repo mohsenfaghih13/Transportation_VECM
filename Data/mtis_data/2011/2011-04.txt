@@ -1,0 +1,153 @@
+Table 1. ESTIMATED MONTHLY SALES AND INVENTORIES FOR MANUFACTURERS, RETAILERS, AND MERCHANT WHOLESALERS  DATA MONTH 04 2011
+
+                                   -------------SALES-------------  ----------INVENTORIES----------     INVENTORIES/SALES RATIOS
+                                   Apr. 2011  Mar. 2011  Apr. 2010  Apr. 2011  Mar. 2011  Apr. 2010  Apr. 2011  Mar. 2011  Apr. 2010
+                                      (p)        (r)        (s)        (p)        (r)        (s)
+   ADJUSTED
+    TOTAL BUSINESS                 1,185,641  1,184,017  1,067,887  1,497,480  1,485,581  1,353,757       1.26       1.25       1.27
+    MANUFACTURERS                    444,522    445,386    400,920    587,754    580,076    523,410       1.32       1.30       1.31
+    RETAILERS                        347,607    346,195    322,993    462,514    461,894    437,443       1.33       1.33       1.35
+    MERCHANT WHOLESALERS             393,512    392,436    343,974    447,212    443,611    392,904       1.14       1.13       1.14
+   NOT ADJUSTED
+    TOTAL BUSINESS                 1,186,825  1,244,429  1,078,088  1,501,264  1,488,078  1,356,061       1.26       1.20       1.26
+    MANUFACTURERS                    445,839    471,211    403,917    591,067    578,111    525,424       1.33       1.23       1.30
+    RETAILERS                        347,778    353,036    322,599    462,952    462,012    437,778       1.33       1.31       1.36
+    MERCHANT WHOLESALERS             393,208    420,182    351,572    447,245    447,955    392,859       1.14       1.07       1.12
+
+
+(p) preliminary.                                                                 
+(r) revised.                                                                     
+(s) Adjusted data were revised due to concurrent seasonal adjustment. No revisions were made to Not Adjusted data. 
+
+
+
+
+
+Table 2. PERCENT CHANGES FOR SALES AND INVENTORIES - MANUFACTURERS, RETAILERS, AND MERCHANT WHOLESALERS  DATA MONTH 04 2011
+
+                                                                  ADJUSTED                                                              NOT ADJUSTED
+                                   --------------SALES---------------  -----------INVENTORIES------------  --------------SALES---------------  -----------INVENTORIES------------
+                                   Apr. 2011/  Mar. 2011/  Apr. 2011/  Apr. 2011/  Mar. 2011/  Apr. 2011/  Apr. 2011/  Mar. 2011/  Apr. 2011/  Apr. 2011/  Mar. 2011/  Apr. 2011/
+                                   Mar. 2011   Feb. 2011   Apr. 2010   Mar. 2011   Feb. 2011   Apr. 2010   Mar. 2011   Feb. 2011   Apr. 2010   Mar. 2011   Feb. 2011   Apr. 2010
+
+    TOTAL BUSINESS                        0.1         2.4        11.0         0.8         1.3        10.6        -4.6        19.1        10.1         0.9         1.4        10.7
+    MANUFACTURERS                        -0.2         3.1        10.9         1.3         1.4        12.3        -5.4        18.8        10.4         2.2         0.9        12.5
+    RETAILERS                             0.4         0.7         7.6         0.1         1.0         5.7        -1.5        15.1         7.8         0.2         2.8         5.8
+    MERCHANT WHOLESALERS                  0.3         3.0        14.4         0.8         1.3        13.8        -6.4        23.0        11.8        -0.2         0.7        13.8
+
+
+(p) preliminary.                                                                 
+(r) revised.                                                                     
+(s) Adjusted data were revised due to concurrent seasonal adjustment. No revisions were made to Not Adjusted data. 
+
+
+
+
+
+Table 3. ESTIMATED MONTHLY RETAIL SALES, INVENTORIES, AND INVENTORIES/SALES RATIOS, BY KIND OF BUSINESS  DATA MONTH 04 2011
+
+                                                                -------------SALES-------------  ----------INVENTORIES----------    PERCENT CHANGE IN INVENTORIES        INVENTORIES/SALES RATIOS
+   KIND OF BUSINESS                                             Apr. 2011  Mar. 2011  Apr. 2010  Apr. 2011  Mar. 2011  Apr. 2010  Apr. 2011/  Mar. 2011/  Apr. 2011/
+                                                                   (p)        (r)        (s)        (p)        (r)        (s)     Mar. 2011   Feb. 2011   Apr. 2010   Apr. 2011  Mar. 2011  Apr. 2010
+   ADJUSTED
+   44,45     RETAIL TRADE, TOTAL                                  347,607    346,195    322,993    462,514    461,894    437,443         0.1         1.0         5.7       1.33       1.33       1.35
+
+   44,45-441 TOTAL EXCL. MOTOR VEHICLE AND PARTS DEALERS          280,498    278,627    261,708    333,192    332,906    319,591         0.1         1.0         4.3       1.19       1.19       1.22
+
+   441       MOTOR VEHICLE AND PARTS DEALERS                       67,109     67,568     61,285    129,322    128,988    117,852         0.3         1.2         9.7       1.93       1.91       1.92
+   442,443   FURNITURE,HOME FURN.,ELECTRONICS, APPL.STORES         15,943     16,141     15,681     27,631     27,697     26,871        -0.2         0.9         2.8       1.73       1.72       1.71
+   444       BUILDING MATL. & GARDEN EQUIPMENT & SUPPLY STORES     24,714     24,580     25,530     45,030     45,061     43,503        -0.1         0.9         3.5       1.82       1.83       1.70
+   445       FOOD AND BEVERAGE STORES                              51,173     50,546     48,247     38,690     38,273     37,541         1.1         0.6         3.1       0.76       0.76       0.78
+   448       CLOTHING AND ACCESSORY STORES                         18,693     18,681     17,776     44,009     43,886     41,583         0.3         0.6         5.8       2.35       2.35       2.34
+   452       GENERAL MERCHANDISE                                   52,400     52,084     50,682     74,923     75,177     71,169        -0.3         1.3         5.3       1.43       1.44       1.40
+   4521      DEPARTMENT STORES (EXCL. LEASED DEPTS.)               15,459     15,464     15,565     31,036     31,285     30,815        -0.8        -0.2         0.7       2.01       2.02       1.98
+
+   NOT ADJUSTED
+   44,45     RETAIL TRADE, TOTAL                                  347,778    353,036    322,599    462,952    462,012    437,778         0.2         2.8         5.8       1.33       1.31       1.36
+
+   44,45-441 TOTAL EXCL. MOTOR VEHICLE AND PARTS DEALERS          277,501    277,054    258,052    329,555    328,773    316,035         0.2         3.0         4.3       1.19       1.19       1.22
+
+   441       MOTOR VEHICLE AND PARTS DEALERS                       70,277     75,982     64,547    133,397    133,239    121,743         0.1         2.5         9.6       1.90       1.75       1.89
+   442,443   FURNITURE,HOME FURN.,ELECTRONICS, APPL.STORES         14,432     15,965     14,156     26,802     26,368     26,092         1.6         3.0         2.7       1.86       1.65       1.84
+   444       BUILDING MATL. & GARDEN EQUIPMENT & SUPPLY STORES     27,627     24,543     29,140     48,002     47,584     46,331         0.9         5.4         3.6       1.74       1.94       1.59
+   445       FOOD AND BEVERAGE STORES                              51,079     50,159     47,230     38,187     37,896     37,028         0.8         1.5         3.1       0.75       0.76       0.78
+   448       CLOTHING AND ACCESSORY STORES                         18,447     18,086     17,087     42,909     43,272     40,543        -0.8         3.0         5.8       2.33       2.39       2.37
+   452       GENERAL MERCHANDISE                                   50,925     50,089     48,229     73,021     73,173     69,385        -0.2         5.0         5.2       1.43       1.46       1.44
+   4521      DEPARTMENT STORES (EXCL. LEASED DEPTS.)               14,529     14,197     14,309     30,012     30,159     29,798        -0.5         3.4         0.7       2.07       2.12       2.08
+
+
+(p) preliminary.                                                                 
+(r) revised.                                                                     
+(s) Adjusted data were revised due to concurrent seasonal adjustment. No revisions were made to Not Adjusted data. 
+
+
+
+
+
+Table 4. ADJUSTED MTIS DOLLAR AND PERCENT CHANGES  DATA MONTH 04 2011
+
+                                          C1             C2         C3         C4             C5         C6
+                                   ----------DOLLAR CHANGES-----------  ----------PERCENT CHANGES----------
+                                   CMCY-PMCY  PMCY-(PM-1)CY  CMCY-CMPY  CMCY/PMCY  PMCY/(PM-1)CY  CMCY/CMPY
+
+   SALES
+    TOTAL BUSINESS                     1,624         27,566    117,754        0.1            2.4       11.0
+    MANUFACTURERS                       -864        445,386     43,602       -0.2            0.0       10.9
+    RETAILERS                          1,412          2,462     24,614        0.4            0.7        7.6
+    MERCHANT WHOLESALERS               1,076         11,604     49,538        0.3            3.0       14.4
+
+   INVENTORY
+    TOTAL BUSINESS                    11,899         18,349    143,723        0.8            1.3       10.6
+    MANUFACTURERS                      7,678          8,222     64,344        1.3            1.4       12.3
+    RETAILERS                            620          4,630     25,071        0.1            1.0        5.7
+    MERCHANT WHOLESALERS               3,601          5,497     54,308        0.8            1.3       13.8
+
+
+Legend:                                                                          
+ (P)=Preliminary   
+ (F)=Final                                                                       
+ CM=Current Month                                                                
+ PM=Previous Month                                                               
+ CY=Current Year                                                                 
+ PY=Previous Year                                                                
+ CM/PM=Current Month to Previous Month                                           
+ PM/PM-1=Previous Month to Previous Month minus one                              
+
+
+
+
+
+Table 5. PM REVISIONS PRELIMINARY TO FINAL  DATA MONTH 04 2011
+
+                                          C1           C2           C3         C4           C5           C6
+                                   ------------UNADJUSTED-------------  -------------ADJUSTED--------------
+                                      PM (P)  PM(F)-PM(P)  PM(F)/PM(P)     PM (P)  PM(F)-PM(P)  PM(F)/PM(P)
+                                                $ CHANGE     % CHANGE                $ CHANGE     % CHANGE
+   SALES
+    TOTAL BUSINESS                 1,259,068      -14,639        -1.16  1,200,113      -16,096        -1.34
+    MANUFACTURERS                    487,260      -16,049        -3.29    461,449      -16,063        -3.48
+    RETAILERS                        352,813          223         0.06    346,658         -463        -0.13
+    MERCHANT WHOLESALERS             418,995        1,187         0.28    392,006          430         0.11
+
+   INVENTORY
+    TOTAL BUSINESS                 1,482,413        5,665         0.38  1,476,700        8,881         0.60
+    MANUFACTURERS                    573,658        4,453         0.78    572,329        7,747         1.35
+    RETAILERS                        461,077          935         0.20    461,447          447         0.10
+    MERCHANT WHOLESALERS             447,678          277         0.06    442,924          687         0.16
+
+
+Legend:                                                                          
+ (P)=Preliminary   
+ (F)=Final                                                                       
+ CM=Current Month                                                                
+ PM=Previous Month                                                               
+ CY=Current Year                                                                 
+ PY=Previous Year                                                                
+ CM/PM=Current Month to Previous Month                                           
+ PM/PM-1=Previous Month to Previous Month minus one
+
+
+
+
+
+Last Revised: June 14, 2011
