@@ -13,15 +13,16 @@ CFG$data_file <- "Transportation_Inventory_Complete_10_Modes_WPU30.xlsx"
 CFG$out_dir   <- "outputs"
 
 # --- variables -------------------------------------------------------------
-# The four modes that carry the primary pairwise systems.
+# The five modes that carry the primary pairwise systems.
 CFG$modes <- c(LTL        = "Trucking_LD_LTL",
                Truckload  = "Trucking_LD_Truckload",
                Local      = "Trucking_Local",
-               Airfreight = "Airfreight_Scheduled")
+               Airfreight = "Airfreight_Scheduled",
+               SeaFreight = "Deep_Sea_Freight")
 
 # Additional series carried through the univariate integration tests only.
 CFG$extra_series <- c("Airfreight_NonScheduled", "Rail_Transportation",
-                      "Inland_Water_Freight", "Deep_Sea_Freight",
+                      "Inland_Water_Freight",
                       "TC_Aggregate_WPU30", "Total_Inventories",
                       "Warehouse_Construction", "Warehousing_Storage",
                       "PPI_All_Commodities")

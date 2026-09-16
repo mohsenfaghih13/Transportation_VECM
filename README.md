@@ -84,7 +84,7 @@ systems now run the full 253-month window.
 **Shock dummies are dated from the data.** Zivot-Andrews puts the structural
 break in mid-to-late 2021 and finds nothing near 2008-09. A dummy spanning
 2020-01 to 2022-12 therefore switches on more than a year early; under that
-design 15 of 24 primary cells show significant mode-side adjustment, against 2
+design 14 of 30 primary cells show significant mode-side adjustment, against 5
 under correct timing (`za_step`). Five designs are retained in the grid so
 this sensitivity stays visible rather than being a hidden assumption.
 
@@ -128,7 +128,7 @@ the rest aren't significant at all, a messier result than the summary above
 suggests on its own.
 
 **Descriptive statistics match Maysami & Koh's Table 2.** `01_data_audit.R`
-reports mean, std dev, min and max for each of the four modes plus Census
+reports mean, std dev, min and max for each of the five modes plus Census
 MTIS IC, in both log level and log first-difference form, over the primary
 system's common window (`outputs/01_data_audit/descriptive_statistics.csv`),
 following the Maysami & Koh (2000) reporting template.

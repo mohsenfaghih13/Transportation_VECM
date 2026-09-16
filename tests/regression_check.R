@@ -4,9 +4,9 @@
 # =============================================================================
 # Compares outputs/03_grid/cells.csv against frozen fixtures in tests/fixtures/.
 #
-#   phase1  = run A, dummies "none"                 (24 cells)
-#   phase2  = all runs, dummies "none" and "shocks" (240 cells; "shocks"->"orig")
-#   phase4  = all runs, every design each run has    (576 cells)
+#   phase1  = run A, dummies "none"                 (30 cells)
+#   phase2  = all runs, dummies "none" and "shocks" (300 cells; "shocks"->"orig")
+#   phase4  = all runs, every design each run has    (720 cells)
 #
 # Any mismatch beyond floating-point tolerance is a regression.
 #
@@ -38,6 +38,12 @@
 # Run F (narrower 2009-2019 pre-pandemic subsample, same reduced dummy_sets
 # as run E) was added afterward; phase2/phase4 grew again (216->240,
 # 528->576) and fixtures were re-baselined accordingly.
+#
+# Deep_Sea_Freight was promoted from CFG$extra_series to a fifth primary
+# mode (CFG$modes). All existing cells for the original four modes matched
+# exactly (24/240/576 old cells all found unchanged among the new totals);
+# only new SeaFreight cells were added. Fixtures re-baselined again
+# (24->30, 240->300, 576->720).
 # =============================================================================
 
 TOL <- 1e-8
