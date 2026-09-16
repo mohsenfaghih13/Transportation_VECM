@@ -117,15 +117,18 @@ this window -- rather than run four designs that would each silently
 degenerate to the same "crisis dummy only" column, run E is given its own
 reduced `dummy_sets` (`none`, `crisis_only`) so the table isn't mislabeled as
 testing a pandemic break that can't exist in this window (see `R/dummies.R`,
-`config.R`). On the pre-pandemic data, significant negative mode-side
-adjustment appears for LTL, truckload and local trucking (2 cells each) but
-**not once for airfreight** -- consistent with the deflated-run result above,
-and another reason to treat airfreight's nominal, full-sample result with
-caution rather than as the headline case. Under `crisis_only` specifically,
-none of the four modes show the clean, correctly-signed adjustment pattern --
-LTL is significant but positive (the wrong sign for error-correction), and
-the rest aren't significant at all, a messier result than the summary above
-suggests on its own.
+`config.R`). On the pre-pandemic data, only LTL shows any significant,
+correctly-signed (negative) mode-side adjustment at all (1 of 4 identified
+cells) -- Truckload, Local and Airfreight show none, and SeaFreight is not
+identified anywhere in this window (see note in the report). Airfreight's
+complete absence of any significant result here is consistent with the
+deflated-run result above, and another reason to treat airfreight's nominal,
+full-sample result with caution rather than as the headline case. Under
+`crisis_only` specifically, neither LTL nor Truckload show the clean,
+correctly-signed adjustment pattern -- both are significant but positive
+(the wrong sign for error-correction), while Local and Airfreight aren't
+significant at all -- a messier result than a clean cross-mode pattern would
+suggest.
 
 **Descriptive statistics match Maysami & Koh's Table 2.** `01_data_audit.R`
 reports mean, std dev, min and max for each of the five modes plus Census
@@ -156,8 +159,8 @@ following the Maysami & Koh (2000) reporting template.
   `cells.csv`; `ljung_box.csv` for the combined systems). A failed test
   (p < 0.05) means that equation's t-stats/p-values are not trustworthy,
   regardless of significance stars -- across the whole grid this fails on
-  28% of mode equations and 34% of IC equations. **Local trucking is the
-  case to flag explicitly**: all 12 of its identified primary-system cells
+  20% of mode equations and 19% of IC equations. **Local trucking is the
+  case to flag explicitly**: all 10 of its identified primary-system cells
   fail on the mode side, including both of its two headline specifications.
   This is the same diagnostic, on the same mode, that an earlier version of
   this project flagged and then overrode ("too significant to ignore") --
@@ -174,13 +177,14 @@ showing significant negative mode-side adjustment:
 
 | Mode | Identified | Significant | Share |
 |---|---|---|---|
-| Local trucking | 6 | 4 | 0.67 |
-| Truckload | 11 | 5 | 0.45 |
-| Airfreight (scheduled) | 5 | 2 | 0.40 |
+| Sea freight | 12 | 11 | 0.92 |
+| Truckload | 11 | 7 | 0.64 |
+| Local trucking | 5 | 3 | 0.60 |
 | LTL | 13 | 2 | 0.15 |
+| Airfreight (scheduled) | 5 | 0 | 0.00 |
 
 **Local trucking's row above should not be read at face value.** Every one of
-its identified primary-system specifications -- the 4 counted "significant"
+its identified primary-system specifications -- the 3 counted "significant"
 here included -- fails the Ljung-Box residual test on the mode side (see
 Caveats). That means the t-statistics behind this row are not trustworthy,
 the same conclusion reached about this same mode in an earlier report on
@@ -189,15 +193,17 @@ strongest row in this table.
 
 No mode's mode-side adjustment is anywhere near unanimous the way airfreight's
 was on the pre-backfill 187-month sample. At the same time, the inventory side
-(`alpha_IC`) is significant in nearly every identified cell across all four
-modes -- closer to Swanson's original direction (inventory adjusts) than to
-the "reversal" pattern the truncated sample suggested. Both sides are
+(`alpha_IC`) is significant in the large majority of identified cells across
+all five modes (83% overall in the primary system) -- closer to Swanson's
+original direction (inventory adjusts) than to the "reversal" pattern the
+truncated sample suggested, though this varies by mode: 100% for LTL, Local
+and Airfreight, but only 53% for the newly-added SeaFreight. Both sides are
 frequently significant together, which is a messier picture than a clean
 asymmetry in either direction. Formal weak-exogeneity testing (`alrtest`,
 `we_mode_LR`/`we_mode_p`/`we_IC_LR`/`we_IC_p` in `cells.csv`) is implemented
-and mostly agrees with the informal t-statistic read (5 of 102 mode/IC pairs
+and mostly agrees with the informal t-statistic read (9 of 128 mode/IC pairs
 disagree in the primary system) -- reassuring, but not yet used to make a
 final call on any one mode or direction as the headline finding. Two further
 robustness checks (deflated by an overall PPI, and a pre-pandemic subsample)
 both point toward airfreight's result being the least trustworthy of the
-four -- see the design notes above.
+five -- see the design notes above.
