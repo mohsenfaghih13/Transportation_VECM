@@ -1,4 +1,4 @@
-"Model","identified","mode_adjusts","IC_adjusts","both","neither"
+"Model","identified","mode_sig","IC_sig","both","neither"
 "LTL",17,7,17,7,0
 "Truckload",17,12,13,8,0
 "Local",10,7,10,7,0

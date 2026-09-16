@@ -115,13 +115,18 @@ print(data.frame(Model = hd$Model, ecdet = hd$ecdet, lag = hd$lag_rule,
                   stringsAsFactors = FALSE), row.names = FALSE)
 
 # --- 4. which mode adjusts, and which side ---------------------------------
-cat("\nWho adjusts (informal, t-stat on alpha), counted over identified cells",
-    "in the primary system\n")
+# Counts any significant alpha (informal, t-stat), regardless of sign -- NOT
+# the same test as "survival" above, which additionally requires alpha < 0
+# (genuine error-correction). A cell can be mode_sig here without being
+# sig_negative there, if its significant alpha happens to be positive.
+cat("\nSignificant alpha, either sign (informal, t-stat), counted over",
+    "identified cells in the primary system -- not the same as 'survival'",
+    "above, which also requires alpha < 0\n")
 who <- do.call(rbind, lapply(names(CFG$modes), function(m) {
   s <- prim[prim$Model == m & !is.na(prim$rank_used), ]
   data.frame(Model = m, identified = nrow(s),
-             mode_adjusts = sum(!is.na(s$p_mode) & s$p_mode < CFG$alpha_sig),
-             IC_adjusts = sum(!is.na(s$p_IC) & s$p_IC < CFG$alpha_sig),
+             mode_sig = sum(!is.na(s$p_mode) & s$p_mode < CFG$alpha_sig),
+             IC_sig = sum(!is.na(s$p_IC) & s$p_IC < CFG$alpha_sig),
              both = sum(!is.na(s$p_mode) & s$p_mode < CFG$alpha_sig &
                         !is.na(s$p_IC) & s$p_IC < CFG$alpha_sig),
              neither = sum((is.na(s$p_mode) | s$p_mode >= CFG$alpha_sig) &
