@@ -1,6 +1,6 @@
 "Model","identified","mode_sig","IC_sig","both","neither"
-"LTL",17,7,17,7,0
+"LTL",18,8,18,8,0
 "Truckload",17,12,13,8,0
-"Local",10,7,10,7,0
-"Airfreight",5,1,5,1,0
+"Local",11,8,11,8,0
+"Airfreight",6,1,6,1,0
 "SeaFreight",15,14,8,7,0

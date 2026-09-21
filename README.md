@@ -4,12 +4,12 @@ Do freight rates and business inventories share a long-run relationship, and
 when they drift apart, which side adjusts?
 
 The short answer from this analysis is that **no single mode reliably
-error-corrects across every specification** -- local trucking currently shows
-the highest survival share (67% of identified cells), followed by truckload
-(45%), airfreight (40%) and LTL (15%), and the inventory side is significant
-almost everywhere regardless of mode. See "Headline result" below; treat any
-one mode as "the" headline case only once weak-exogeneity testing settles
-which side is genuinely adjusting.
+error-corrects across every specification** -- sea freight currently shows
+the highest survival share (92% of identified cells), followed by truckload
+(64%), local trucking (50%), LTL (15%) and airfreight (0%), and the inventory
+side is significant in the large majority of cases regardless of mode. See
+"Headline result" below; treat any one mode as "the" headline case only once
+weak-exogeneity testing settles which side is genuinely adjusting.
 
 ## Running it
 
@@ -56,8 +56,8 @@ shock window.
 regardless of what the Johansen test said. The grid now reads the rank from
 the trace test and estimates only where that rank is estimable, recording the
 reason otherwise. A bivariate system admits `r = 1` only, so `r = 0` and
-`r = 2` cells are reported unestimated rather than forced. Across the 600-cell
-grid, a rank-1 system exists in fewer than half.
+`r = 2` cells are reported unestimated rather than forced. Across the 720-cell
+grid, a rank-1 system exists in fewer than half (40%).
 
 **Specification choices are grid dimensions, not constants.** `ecdet` runs
 over `none`, `const` and `trend`; lag order is taken under both the AIC and
@@ -66,7 +66,7 @@ and not the others is reported as such.
 
 **Univariate and multivariate stages use different samples, deliberately.**
 Unit root tests use each series' own full history, because they need no second
-series and power rises with T. The VECMs use the 2003-12 overlap, where the
+series and power rises with T. The VECMs use the 2004-01 overlap, where the
 modes and Census MTIS inventories are both available. The longer univariate
 window (for the two series still shorter than the primary modes) changes
 exactly one verdict, resolving scheduled airfreight from ambiguous to cleanly
@@ -78,13 +78,15 @@ of the workbook had `Total_Inventories` starting 2009-06 against the modes'
 start date. That gap was a data-collection limit, not a limit of the Census
 MTIS source itself -- MTIS actually goes back to 1996 (see
 https://www.census.gov/mtis/historic_releases.html). `Total_Inventories`
-has since been backfilled to 2003-12, matching the modes, so the primary
-systems now run the full 253-month window.
+has since been backfilled to 2003-12, matching the modes. The primary systems
+briefly ran the full 253-month window on that basis, then moved to a
+2004-01 start (252 months) once every run's nominal 2003 start was found to
+resolve to the same single incomplete month (2003-12) regardless.
 
 **Shock dummies are dated from the data.** Zivot-Andrews puts the structural
 break in mid-to-late 2021 and finds nothing near 2008-09. A dummy spanning
 2020-01 to 2022-12 therefore switches on more than a year early; under that
-design 14 of 30 primary cells show significant mode-side adjustment, against 5
+design 16 of 30 primary cells show significant mode-side adjustment, against 5
 under correct timing (`za_step`). Five designs are retained in the grid so
 this sensitivity stays visible rather than being a hidden assumption.
 
@@ -110,7 +112,7 @@ airfreight.
 **Run E excludes the pandemic entirely, not just its dummy window.** Where
 runs A-D try to *control for* 2020-22 with a shock dummy, run E asks the
 cleaner question directly: does the mode-level pattern still show up if that
-period is dropped from the sample outright (2003-01 to 2019-12, 193 months)?
+period is dropped from the sample outright (2004-01 to 2019-12, 192 months)?
 The pandemic-era dummy designs (`orig`, `za_step`, `za_window`, `za_series`)
 all reference calendar dates in 2020 or later, which fall entirely outside
 this window -- rather than run four designs that would each silently
@@ -119,16 +121,16 @@ reduced `dummy_sets` (`none`, `crisis_only`) so the table isn't mislabeled as
 testing a pandemic break that can't exist in this window (see `R/dummies.R`,
 `config.R`). On the pre-pandemic data, only LTL shows any significant,
 correctly-signed (negative) mode-side adjustment at all (1 of 4 identified
-cells) -- Truckload, Local and Airfreight show none, and SeaFreight is not
-identified anywhere in this window (see note in the report). Airfreight's
-complete absence of any significant result here is consistent with the
-deflated-run result above, and another reason to treat airfreight's nominal,
-full-sample result with caution rather than as the headline case. Under
-`crisis_only` specifically, neither LTL nor Truckload show the clean,
-correctly-signed adjustment pattern -- both are significant but positive
-(the wrong sign for error-correction), while Local and Airfreight aren't
-significant at all -- a messier result than a clean cross-mode pattern would
-suggest.
+cells) -- Truckload and Airfreight are identified but not significant, while
+Local and SeaFreight are not identified anywhere in this window (see note in
+the report). Airfreight's complete absence of any significant result here is
+consistent with the deflated-run result above, and another reason to treat
+airfreight's nominal, full-sample result with caution rather than as the
+headline case. Under `crisis_only` specifically, neither LTL nor Truckload
+show the clean, correctly-signed adjustment pattern -- both are significant
+but positive (the wrong sign for error-correction); Airfreight is identified
+but not significant, and Local is not identified under this design either --
+a messier result than a clean cross-mode pattern would suggest.
 
 **Descriptive statistics match Maysami & Koh's Table 2.** `01_data_audit.R`
 reports mean, std dev, min and max for each of the five modes plus Census
@@ -159,8 +161,8 @@ following the Maysami & Koh (2000) reporting template.
   `cells.csv`; `ljung_box.csv` for the combined systems). A failed test
   (p < 0.05) means that equation's t-stats/p-values are not trustworthy,
   regardless of significance stars -- across the whole grid this fails on
-  20% of mode equations and 19% of IC equations. **Local trucking is the
-  case to flag explicitly**: all 10 of its identified primary-system cells
+  21% of mode equations and 19% of IC equations. **Local trucking is the
+  case to flag explicitly**: all 11 of its identified primary-system cells
   fail on the mode side, including both of its two headline specifications.
   This is the same diagnostic, on the same mode, that an earlier version of
   this project flagged and then overrode ("too significant to ignore") --
@@ -171,7 +173,7 @@ following the Maysami & Koh (2000) reporting template.
 
 ## Headline result
 
-In the primary Census MTIS system (now the full 2003-2024, 253-month window),
+In the primary Census MTIS system (now the full 2004-2024, 252-month window),
 excluding the mistimed dummy design, the share of identified specifications
 showing significant negative mode-side adjustment:
 
@@ -179,7 +181,7 @@ showing significant negative mode-side adjustment:
 |---|---|---|---|
 | Sea freight | 12 | 11 | 0.92 |
 | Truckload | 11 | 7 | 0.64 |
-| Local trucking | 5 | 3 | 0.60 |
+| Local trucking | 6 | 3 | 0.50 |
 | LTL | 13 | 2 | 0.15 |
 | Airfreight (scheduled) | 5 | 0 | 0.00 |
 
@@ -194,14 +196,14 @@ strongest row in this table.
 No mode's mode-side adjustment is anywhere near unanimous the way airfreight's
 was on the pre-backfill 187-month sample. At the same time, the inventory side
 (`alpha_IC`) is significant in the large majority of identified cells across
-all five modes (83% overall in the primary system) -- closer to Swanson's
+all five modes (84% overall in the primary system) -- closer to Swanson's
 original direction (inventory adjusts) than to the "reversal" pattern the
 truncated sample suggested, though this varies by mode: 100% for LTL, Local
 and Airfreight, but only 53% for the newly-added SeaFreight. Both sides are
 frequently significant together, which is a messier picture than a clean
 asymmetry in either direction. Formal weak-exogeneity testing (`alrtest`,
 `we_mode_LR`/`we_mode_p`/`we_IC_LR`/`we_IC_p` in `cells.csv`) is implemented
-and mostly agrees with the informal t-statistic read (9 of 128 mode/IC pairs
+and mostly agrees with the informal t-statistic read (8 of 134 mode/IC pairs
 disagree in the primary system) -- reassuring, but not yet used to make a
 final call on any one mode or direction as the headline finding. Two further
 robustness checks (deflated by an overall PPI, and a pre-pandemic subsample)

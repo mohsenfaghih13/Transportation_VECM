@@ -17,7 +17,7 @@ za_break_date <- function(x, dates, lag = CFG$za_lag) {
 # that depends on the lag order and is handled by finalize_dummies().
 #
 # crisis_only exists for windows that end before the pandemic (run E,
-# 2003-2019): orig/za_step/za_window/za_series all use fixed 2020+ dates for
+# 2004-2019): orig/za_step/za_window/za_series all use fixed 2020+ dates for
 # their pandemic component, which fall entirely outside such a window and so
 # get dropped by finalize_dummies() anyway -- they'd all silently collapse to
 # "crisis only" under the hood. crisis_only makes that explicit up front

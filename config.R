@@ -57,18 +57,24 @@ CFG$deflator_series <- "PPI_All_Commodities"
 #      pre-pandemic check requested alongside E. Same reasoning as E applies
 #      to its dummy_sets (all pandemic-dated designs fall outside this
 #      window too), so it gets the same reduced set.
+# All "2003-01-01" starts below resolve to the same effective 2003-12
+# window regardless (data availability, not the literal start date -- see
+# CFG$common_start), which left exactly one month (2003-12) in the 2003
+# calendar year. Moved to 2004-01-01 project-wide so every run starts on a
+# clean full year instead of one incomplete month; matches a collaborator's
+# independent analysis, which made the same adjustment for the same reason.
 CFG$runs <- list(
-  list(tag = "A_common_censusIC",   start = "2003-01-01", ic = "Total_Inventories",
+  list(tag = "A_common_censusIC",   start = "2004-01-01", ic = "Total_Inventories",
        label = "Census MTIS IC, common window", primary = TRUE),
   list(tag = "B_common_whseconstr", start = "2009-06-01", ic = "Warehouse_Construction",
        label = "Warehouse construction, common window", primary = FALSE),
-  list(tag = "C_full_whseconstr",   start = "2003-01-01", ic = "Warehouse_Construction",
+  list(tag = "C_full_whseconstr",   start = "2004-01-01", ic = "Warehouse_Construction",
        label = "Warehouse construction, full window", primary = FALSE),
-  list(tag = "D_deflated_censusIC", start = "2003-01-01", ic = "Total_Inventories",
+  list(tag = "D_deflated_censusIC", start = "2004-01-01", ic = "Total_Inventories",
        label = "Census MTIS IC, deflated by All-Commodities PPI",
        primary = FALSE, deflate = TRUE),
-  list(tag = "E_prepandemic_censusIC", start = "2003-01-01", end = "2019-12-31",
-       ic = "Total_Inventories", label = "Pre-pandemic subsample (2003-2019), Census MTIS IC",
+  list(tag = "E_prepandemic_censusIC", start = "2004-01-01", end = "2019-12-31",
+       ic = "Total_Inventories", label = "Pre-pandemic subsample (2004-2019), Census MTIS IC",
        primary = FALSE, dummy_sets = c("none", "crisis_only")),
   list(tag = "F_prepandemic_2009_censusIC", start = "2009-01-01", end = "2019-12-31",
        ic = "Total_Inventories", label = "Narrower pre-pandemic subsample (2009-2019), Census MTIS IC",
@@ -95,11 +101,11 @@ CFG$cv_levels  <- c("10pct", "5pct", "1pct")
 CFG$combined_systems <- list(
   list(tag = "TL_Air_IC",  vars = c(Truckload  = "Trucking_LD_Truckload",
                                      Airfreight = "Airfreight_Scheduled"),
-       ic = "Total_Inventories", start = "2003-01-01",
+       ic = "Total_Inventories", start = "2004-01-01",
        label = "Truckload + Airfreight + Census IC", primary = TRUE),
   list(tag = "LTL_Air_IC", vars = c(LTL        = "Trucking_LD_LTL",
                                      Airfreight = "Airfreight_Scheduled"),
-       ic = "Total_Inventories", start = "2003-01-01",
+       ic = "Total_Inventories", start = "2004-01-01",
        label = "LTL + Airfreight + Census IC (alternate)", primary = FALSE)
 )
 
@@ -127,7 +133,7 @@ CFG$dummy_sets <- c("none", "orig", "za_step", "za_window", "za_series")
 CFG$headline_dummy <- "za_step"
 
 # --- univariate tests ------------------------------------------------------
-CFG$common_start <- as.Date("2003-12-01")  # window the primary VECMs use
+CFG$common_start <- as.Date("2004-01-01")  # window the primary VECMs use
 CFG$kpss_lags    <- "long"
 CFG$za_model     <- "both"
 CFG$za_lag       <- 4L

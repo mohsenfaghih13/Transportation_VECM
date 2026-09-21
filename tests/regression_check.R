@@ -44,6 +44,24 @@
 # exactly (24/240/576 old cells all found unchanged among the new totals);
 # only new SeaFreight cells were added. Fixtures re-baselined again
 # (24->30, 240->300, 576->720).
+#
+# Run G (2004-2024 start, full dummy_sets) was added as a non-primary,
+# additive-only comparison run against an independent replication attempt
+# by a collaborator -- not part of the official report sections. Every
+# cell in runs A-F matched exactly; only new run-G cells were added.
+# Fixtures re-baselined again (30 unchanged, 300->360, 720->870).
+#
+# The whole project (CFG$common_start, and every run's "2003-01-01" start)
+# was then moved to 2004-01-01 -- every run previously starting 2003
+# effectively realized to 2003-12 anyway (one incomplete month), matching
+# the same fix the collaborator's independent script made. Run G, now
+# identical to run A, was removed. This is a real, legitimate change to
+# every downstream number (not a pure addition): 124 of 720 cells moved on
+# alpha_mode/alpha_IC (max abs diff ~0.017), and 10 cells flipped
+# identification status (rank_used NA <-> 1) as a direct result of losing
+# one month of data. Row counts returned to their pre-run-G size
+# (300/720) since G is gone; fixtures re-baselined from the 2004-start
+# output.
 # =============================================================================
 
 TOL <- 1e-8

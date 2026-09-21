@@ -1,8 +1,8 @@
 "run","design","n","median_coef","median_p","sig_5pct"
-"A_common_censusIC","orig",18,0.00709,0.0127,14
-"A_common_censusIC","za_step",13,0.0012,0.5268,5
-"A_common_censusIC","za_window",13,0.01093,0.0499,7
-"A_common_censusIC","za_series",15,0.00506,0.2341,6
+"A_common_censusIC","orig",20,0.00734,0.0135,15
+"A_common_censusIC","za_step",13,0.00124,0.5269,5
+"A_common_censusIC","za_window",14,0.0092,0.0608,6
+"A_common_censusIC","za_series",15,0.00533,0.2284,6
 "B_common_whseconstr","orig",9,0.00422,0.2368,3
 "B_common_whseconstr","za_step",20,-0.00188,0.2147,5
 "B_common_whseconstr","za_window",11,-0.00149,0.089,5
@@ -11,7 +11,7 @@
 "C_full_whseconstr","za_step",16,-5e-05,0.358,3
 "C_full_whseconstr","za_window",13,0.00205,0.3087,0
 "C_full_whseconstr","za_series",14,5e-05,0.4664,2
-"D_deflated_censusIC","orig",13,0.00377,0.1418,6
-"D_deflated_censusIC","za_step",8,-0.00152,0.4227,0
-"D_deflated_censusIC","za_window",11,0.01898,7e-04,6
-"D_deflated_censusIC","za_series",11,0.00106,0.0553,5
+"D_deflated_censusIC","orig",13,0.00378,0.1422,6
+"D_deflated_censusIC","za_step",7,-0.00155,0.5109,0
+"D_deflated_censusIC","za_window",11,0.0192,7e-04,6
+"D_deflated_censusIC","za_series",11,0.00102,0.0503,5

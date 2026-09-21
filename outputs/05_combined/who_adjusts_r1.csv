@@ -2,6 +2,6 @@
 "LTL_Air_IC","Airfreight",8,2,2
 "LTL_Air_IC","IC",8,7,1
 "LTL_Air_IC","LTL",8,4,2
-"TL_Air_IC","Airfreight",8,0,0
-"TL_Air_IC","IC",8,8,0
-"TL_Air_IC","Truckload",8,3,3
+"TL_Air_IC","Airfreight",9,0,0
+"TL_Air_IC","IC",9,8,0
+"TL_Air_IC","Truckload",9,4,4

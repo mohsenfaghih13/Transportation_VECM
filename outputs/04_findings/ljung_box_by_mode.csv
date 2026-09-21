@@ -1,6 +1,6 @@
 "Model","identified","mode_fails","IC_fails"
-"LTL",17,0,3
+"LTL",18,0,3
 "Truckload",17,9,1
-"Local",10,10,0
-"Airfreight",5,0,1
+"Local",11,11,0
+"Airfreight",6,0,1
 "SeaFreight",15,0,1
